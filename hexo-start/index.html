@@ -26,13 +26,13 @@
     <meta name="description" content="Hexo新手踩坑教程（bushi">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从Hexo开启第一篇博客">
-<meta property="og:url" content="https://www.updating.top/hexo-start/">
+<meta property="og:url" content="https://www.0co.dev/hexo-start/">
 <meta property="og:site_name" content="Ethereal State">
 <meta property="og:description" content="Hexo新手踩坑教程（bushi">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202307042106887.png">
 <meta property="article:published_time" content="2023-07-03T01:58:42.000Z">
-<meta property="article:modified_time" content="2024-03-12T14:04:14.000Z">
+<meta property="article:modified_time" content="2024-06-26T05:19:11.557Z">
 <meta property="article:author" content="Konrad Gerrens">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary_large_image">
@@ -80,7 +80,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"www.updating.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"www.0co.dev","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -309,7 +309,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年3月12日 晚上
+                    本文最后更新于：2024年6月26日 下午
                   
                 
               </p>
@@ -320,10 +320,10 @@
                 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p class='note note-success'>本教程基于Hexo博客，Hexo-Fluid主题，Github Pages，阿里云购买域名以及阿里云对象存储OSS实现</p>
 
 <blockquote>
-<p>目前，笔者的域名已更换为腾讯<em>dnspod</em>购买的<code>updating.top</code>域名，图片未更换，但具体配置方式依旧有效。</p>
+<p>目前，笔者的域名已更换，图片未更换，但具体配置方式依旧有效。</p>
 </blockquote>
 <div class="note note-primary">
-            <p><a href="https://www.updating.top/">博客示例 ：www.updating.top</a></p>
+            <p><a href="https://www.0co.dev/">博客示例 ：www.0co.dev</a></p>
           </div>
 
 <blockquote>
@@ -406,7 +406,7 @@
 <p>1、在网站根目录的<code> _config.yml</code> 文件中找到 <code>skip_render</code> 节点，配置 <code>CNAME</code> ，如下图：</p>
 <p align="center"><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202307232053760.png" srcset="/img/loading.gif" lazyload style="zoom: 50%;"/></p>
 
-<p>2、在 <code>/source </code>目录中创建一个文件，命名为 <code>CNAME </code>，里边的内容为你的域名。例如我的域名为：<a href="https://www.updating.top/">https://www.updating.top</a> 该文件的内容为：<a href="http://www.updating.top/">www.updating.top</a> 。</p>
+<p>2、在 <code>/source </code>目录中创建一个文件，命名为 <code>CNAME </code>，里边的内容为你的域名。例如我的域名为：<a href="https://www.0co.dev/">https://www.0co.dev</a> 该文件的内容为：<a href="http://www.0co.dev/">www.0co.dev</a> 。</p>
 <p align="center"><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202307232052107.png" srcset="/img/loading.gif" lazyload style="zoom: 50%;"/></p>
 
 <p>3、DNS解析设置：</p>
@@ -593,7 +593,7 @@
   <div class="license-box my-3">
     <div class="license-title">
       <div>从Hexo开启第一篇博客</div>
-      <div>https://www.updating.top/hexo-start/</div>
+      <div>https://www.0co.dev/hexo-start/</div>
     </div>
     <div class="license-meta">
       

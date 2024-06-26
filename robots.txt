@@ -1,4 +1,4 @@
-# www.updating.top robots.txt
+# www.0co.dev robots.txt
 User-agent: *
 Allow: /
 Allow: /archives/
@@ -12,5 +12,5 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: https://www.updating.top/sitemap.xml
-Sitemap: https://www.updating.top/baidusitemap.xml
+Sitemap: https://www.0co.dev/sitemap.xml
+Sitemap: https://www.0co.dev/baidusitemap.xml
