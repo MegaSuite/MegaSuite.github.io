@@ -1,0 +1,850 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <!--LXGW font-->
+  <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+  <!---->
+  <!-- webspider -->
+  <meta name="baidu-site-verification" content="codeva-GNK5uXsCLO" />
+  <meta name="google-site-verification" content="7Mq8zQQEoIxqxJvemX8hlZtErGSJtATFN9SegHGJ2eg" />
+  <!-- --- -->
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.png">
+  <link rel="icon" href="/img/favicon1.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#414643">
+  <meta name="author" content="Konrad Gerrens">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="欧拉筛法的实际应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【数论】欧拉筛法-埃拉托斯特尼筛法">
+<meta property="og:url" content="https://www.updating.top/Euler-Eratosthenes-Sieve/">
+<meta property="og:site_name" content="Ethereal State">
+<meta property="og:description" content="欧拉筛法的实际应用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202309192017040.png">
+<meta property="article:published_time" content="2023-09-19T12:13:08.000Z">
+<meta property="article:modified_time" content="2023-11-25T13:18:26.000Z">
+<meta property="article:author" content="Konrad Gerrens">
+<meta property="article:tag" content="Algorithm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202309192017040.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>【数论】欧拉筛法-埃拉托斯特尼筛法 - Ethereal State</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.updating.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Ethereal State" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Ethereal State</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="【数论】欧拉筛法-埃拉托斯特尼筛法"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-19 20:13" pubdate>
+          2023年9月19日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">【数论】欧拉筛法-埃拉托斯特尼筛法</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年11月25日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="欧拉筛法"><a href="#欧拉筛法" class="headerlink" title="欧拉筛法"></a>欧拉筛法</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><blockquote>
+<p>筛法就是求出小于等于<code>n</code>的所有素数的方法，找到一个素数后，就将它的倍数标记为合数，也就是把它的倍数“筛掉”。如果一个数没有被比它小的素数“筛掉”，那它就是素数。</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">bool</span> isprime[MAXN]; <span class="hljs-comment">// isprime[i]标记`i`是否是素数的数组</span><br><span class="hljs-type">int</span> prime[MAXN]; <span class="hljs-comment">// 目前的素数列表</span><br><span class="hljs-type">int</span> n; <span class="hljs-comment">// 筛选上限</span><br><span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>; <span class="hljs-comment">// 已经筛出的素数数量</span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">euler</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-built_in">memset</span>(isprime, <span class="hljs-literal">true</span>, <span class="hljs-keyword">sizeof</span>(isprime)); <span class="hljs-comment">//先全部标记为素数</span><br>    isprime[<span class="hljs-number">1</span>] = <span class="hljs-literal">false</span>; <span class="hljs-comment">//已知，1不是素数</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt;= n; i++) <span class="hljs-comment">// i从2循环到n（外层循环）</span><br>    &#123;<br>        <span class="hljs-keyword">if</span>(isprime[i])<span class="hljs-comment">//isprime[i] == 1</span><br>            prime[++cnt] = i;<br>        <span class="hljs-comment">// 如果i没有被前面的数筛掉，则i是素数，此处prime[0]元素并未被使用，保持数值与序号对应</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span>; j &lt;= cnt &amp;&amp; i * prime[j] &lt;= n; j++)<br>        <span class="hljs-comment">// 使用j循环枚举现在已经筛出的素数,以筛掉i的素数倍，即i的prime[j]倍</span><br>        &#123;<br>            isprime[i * prime[j]] = <span class="hljs-literal">false</span>;<br>            <span class="hljs-comment">// 倍数标记为合数，也就是i用prime[j]把i * prime[j]筛掉了</span><br>            <span class="hljs-keyword">if</span>(i % prime[j] == <span class="hljs-number">0</span>) <br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-comment">// 如果i整除prime[j]，退出循环，这样可以保证线性的时间复杂度</span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>假设要筛出<code>n</code>以内的素数。我们先把所有数标记为素数。枚举<code>i</code>从<code>2</code>到<code>n</code>，所以因为<code>i</code>是从小到大的，如果<code>i</code>没有被比它小的数标记为合数，那<code>i</code>就是素数（任意合数的因数一定比它本身小，若<code>i</code>没有被前面的数筛掉，那么它就没有比自己小的因数，当然它就是素数），加入素数列表。</p>
+<p>现在用<code>i</code>来筛后面的数，枚举已经筛出来的素数<code>prime[j]</code>（<code>j∈[1,cnt]</code>），标记<code>i * prime[j]</code>为合数（<code>i ≥ 2，prime[j] ≥ 2</code>，它们的乘积一定为合数），当<code>i</code>是<code>prime[j]</code>的倍数时退出循环，<code>i++</code>。</p>
+<h2 id="正确性证明"><a href="#正确性证明" class="headerlink" title="正确性证明"></a>正确性证明</h2><p>假设我们要筛掉合数<code>a</code>，且<code>a</code>的最小质因数为<code>P1</code>，令<code>a = P1 * b</code> ,那么显然<code>b &lt; a</code>，<code>b</code>先被外层循环碰到。现在<code>b</code>要筛掉它的倍数。</p>
+<p>因为<code>P1</code>是<code>a</code>的最小质因数，所以<code>b</code>的最小质因数必不小于<code>P1</code>，这样就保证<code>b</code>筛掉<code>a</code>前不会在<code>if(i % prime[j] == 0) break;</code>处跳出循环。</p>
+<p>即使<code>b</code>的最小质因数等于<code>P1</code>，也会先筛掉<code>a</code>后再退出循环。这样就保证了每个合数都会被筛掉。</p>
+<h2 id="时间复杂度证明"><a href="#时间复杂度证明" class="headerlink" title="时间复杂度证明"></a>时间复杂度证明</h2><p>欧拉筛法的时间、空间复杂度为<code>Θ(n)</code>。</p>
+<p>空间复杂度是显然的，下面证明时间复杂度为线性。</p>
+<p>我们的核心就是要证明一个合数只会被筛掉一次，即标记<code>isprime[n]=1</code>一次。首先，对于<code>a = P1 * b</code>，<code>b</code>当然只会筛掉<code>a</code>一次，因为我们从小到大枚举<code>prime[j]</code>，也就是说<code>b * prime[j]</code>递增，因此不可能遇到<code>a</code>两次。会不会有其他的数筛掉<code>a</code>呢？假设<code>a</code>又被<code>c</code>筛掉了，其中<code>a = Px * c</code>，<code>Px</code>就是<code>c</code>用来筛掉<code>a</code>的<code>prime[j]</code>。</p>
+<ul>
+<li>若<code>c &gt; b</code>，则<code>Px &lt; P1</code>，与<code>P1</code>是<code>a</code>最小的质因数矛盾，假设不成立；</li>
+<li><strong>若<code>c &lt; b</code>，则<code>Px &gt; P1</code>，这意味着<code>P1</code>是<code>c</code>的质因数。那么<code>c</code>从小到大筛掉它的素数倍，在筛到<code>P1 * c</code>时就<code>break</code>了，所以根本轮不到<code>a</code>。</strong></li>
+</ul>
+<p>综上所述，每个数都只会被筛掉一次，再加上外层的<code>i</code>的循环是线性复杂度，总的时间复杂度是线性的。</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><div class="note note-success">
+            <p>来自：头歌-Python大数据与人工智能实践</p>
+          </div>
+
+<blockquote>
+<p> 计算并输出指定范围内的所有素数。</p>
+<p>第一行输入正整数<code>n</code>，表示测试样例组数，接下来输入<code>n</code>行，每行输入两个正整数<code>a</code>和<code>b</code>，要求输出<code>a</code>和<code>b</code>之间（包括<code>a</code>和<code>b</code>）所有的素数，保证<code>a&lt;b</code>，且<code>b</code>不超过<code>10^7</code></p>
+</blockquote>
+<blockquote>
+<p>测试输入：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">2</span><br><span class="hljs-number">30</span>,<span class="hljs-number">100</span><br><span class="hljs-number">999670</span>,<span class="hljs-number">1000000</span><br><span class="hljs-number">123</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>预期输出：</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">[<span class="hljs-number">31</span>, <span class="hljs-number">37</span>, <span class="hljs-number">41</span>, <span class="hljs-number">43</span>, <span class="hljs-number">47</span>, <span class="hljs-number">53</span>, <span class="hljs-number">59</span>, <span class="hljs-number">61</span>, <span class="hljs-number">67</span>, <span class="hljs-number">71</span>, <span class="hljs-number">73</span>, <span class="hljs-number">79</span>, <span class="hljs-number">83</span>, <span class="hljs-number">89</span>, <span class="hljs-number">97</span>]<br>[<span class="hljs-number">999671</span>, <span class="hljs-number">999683</span>, <span class="hljs-number">999721</span>, <span class="hljs-number">999727</span>, <span class="hljs-number">999749</span>, <span class="hljs-number">999763</span>, <span class="hljs-number">999769</span>, <span class="hljs-number">999773</span>, <span class="hljs-number">999809</span>, <span class="hljs-number">999853</span>, <span class="hljs-number">999863</span>, <span class="hljs-number">999883</span>, <span class="hljs-number">999907</span>, <span class="hljs-number">999917</span>, <span class="hljs-number">999931</span>, <span class="hljs-number">999953</span>, <span class="hljs-number">999959</span>, <span class="hljs-number">999961</span>, <span class="hljs-number">999979</span>, <span class="hljs-number">999983</span>]<br><span class="hljs-number">12</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CODE:</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> sqrt<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span>():<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">solve</span>(<span class="hljs-params">self, l, r</span>):<br>        <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">        :type l, r: int</span><br><span class="hljs-string">        :rtype : list</span><br><span class="hljs-string">        求得[l, r]范围内的所有素数，并将其返回</span><br><span class="hljs-string">        &#x27;&#x27;&#x27;</span><br>        <br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">is_prime</span>(<span class="hljs-params">x</span>):<br>            <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">            通过素数表判断整数是不是素数</span><br><span class="hljs-string">            &#x27;&#x27;&#x27;</span><br>            <span class="hljs-keyword">if</span> x == <span class="hljs-number">1</span>:<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> prime_table:<br>                <span class="hljs-keyword">if</span> x &lt; n * n:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>                <span class="hljs-comment">#如果满足上述条件，说明n之前的素数里没有x的因数</span><br>                <span class="hljs-keyword">if</span> x % n  == <span class="hljs-number">0</span>:<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br><br>        <span class="hljs-keyword">def</span> <span class="hljs-title function_">ouler</span>(<span class="hljs-params">x</span>):<br>            vis = [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(x+<span class="hljs-number">1</span>)]<br>            prime_table = []<br>            ln = <span class="hljs-number">0</span><br>            <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, x+<span class="hljs-number">1</span>):<br>                <span class="hljs-keyword">if</span> vis[n] == <span class="hljs-number">0</span>:<br>                    prime_table.append(n)<br>                    ln += <span class="hljs-number">1</span><br>                <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(ln):<br>                    <span class="hljs-keyword">if</span> n * prime_table[j] &gt; x:<br>                        <span class="hljs-keyword">break</span><br>                    vis[n * prime_table[j]] = <span class="hljs-number">1</span><br>                    <span class="hljs-keyword">if</span> n % prime_table[j] == <span class="hljs-number">0</span>:<br>                        <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">return</span> prime_table<br>        <br>        <br>        prime_table = ouler(<span class="hljs-number">10000</span>)<br>        ans = []<br>        <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(l, r+<span class="hljs-number">1</span>):<br>            <span class="hljs-keyword">if</span> is_prime(n):<br>                ans.append(n)<br>        <span class="hljs-keyword">return</span> ans<br></code></pre></td></tr></table></figure>
+
+<h1 id="埃拉托斯特尼筛法"><a href="#埃拉托斯特尼筛法" class="headerlink" title="埃拉托斯特尼筛法"></a>埃拉托斯特尼筛法</h1><p><strong>埃拉托斯特尼筛法</strong> <em><strong>sieve of Eratosthenes</strong></em>，简称<strong>埃氏筛</strong>，也称<strong>素数筛</strong>。</p>
+<p>从<code>2</code>开始，将每个素数的各个倍数，标记成合数。一个素数的各个倍数，是一个差为此素数本身的等差数列。</p>
+<p>定出要筛数值的范围<code>n</code>，找出$\sqrt{n}$以内的素数$\displaystyle p_{1}，p_{2},\dots,p_{k}$。先用2去筛，把2留下，把2的倍数剔除掉；再用下个素数3筛，把3留下，把3的倍数剔除掉；接下去用下个素数5筛，把5留下，把5的倍数剔除掉，如果最大数不大于最后一个标出的素数的平方，那么剩下的所有的数都是质数，否则继续上述过程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">eratosthenes</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-comment"># 初始所有的都为True</span><br>    IsPrime = [<span class="hljs-literal">True</span>] * (n + <span class="hljs-number">1</span>)<br>    <span class="hljs-comment"># 100**0.5 = 10</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-built_in">int</span>(n ** <span class="hljs-number">0.5</span>) + <span class="hljs-number">1</span>):<br>        <span class="hljs-comment"># i在2-10范围内如果是素数</span><br>        <span class="hljs-keyword">if</span> IsPrime[i]:<br>            <span class="hljs-comment"># 从i平方开始往后去掉，即置标志位为false</span><br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i * i, n + <span class="hljs-number">1</span>, i):<br>                IsPrime[j] = <span class="hljs-literal">False</span><br>    <span class="hljs-comment"># 输出所有标志位为True的就是素数</span><br>    <span class="hljs-keyword">return</span> [x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, n + <span class="hljs-number">1</span>) <span class="hljs-keyword">if</span> IsPrime[x]]<br><br><br><span class="hljs-built_in">print</span>(eratosthenes(<span class="hljs-number">100</span>))<br></code></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%9F%83%E6%8B%89%E6%89%98%E6%96%AF%E7%89%B9%E5%B0%BC%E7%AD%9B%E6%B3%95">埃拉托斯特尼筛法</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/o83290102o5/article/details/79491834">埃拉托斯特尼筛法详解及实现</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40298768/article/details/108631809">欧拉筛法</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/151432852">厄拉托塞师（Eratosthenes）筛法</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Major/" class="category-chain-item">Major</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Major/Algorithm/" class="category-chain-item">Algorithm</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Algorithm/">#Algorithm</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>【数论】欧拉筛法-埃拉托斯特尼筛法</div>
+      <div>https://www.updating.top/Euler-Eratosthenes-Sieve/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Konrad Gerrens</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月19日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/privatebin-by-docker/" title="通过privatebin和docker搭建在线剪贴板">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">通过privatebin和docker搭建在线剪贴板</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/XBOX-Live-Error-Windows11/" title="在Win11上，XBOX Live无法连接的解决方案">
+                        <span class="hidden-mobile">在Win11上，XBOX Live无法连接的解决方案</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.6.8/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://comment.updating.top","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
+              Fluid.plugins.imageCaption(imgSelector);
+              Fluid.plugins.fancyBox(imgSelector);
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <!-- <div class="footer-inner"> -->
+<div class="footer-inner" style="font-size: 0.85rem;">
+  <!--yiyan footer-->
+  
+    <div class="footer-content">
+       <div class="statistics"> <a target="_blank" rel="noopener" href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color: #DDD;"  id="hitokoto"></span></a> <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script> </div>
+    </div>
+  
+  <!-- -->
+  
+    <div class="footer-content">
+       Build by <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> with <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid Theme</span></a> <br/> © 2023 Konrad Gerrens <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+
+  
+  
+</div>
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

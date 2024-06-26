@@ -1,0 +1,834 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <!--LXGW font-->
+  <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+  <!---->
+  <!-- webspider -->
+  <meta name="baidu-site-verification" content="codeva-GNK5uXsCLO" />
+  <meta name="google-site-verification" content="7Mq8zQQEoIxqxJvemX8hlZtErGSJtATFN9SegHGJ2eg" />
+  <!-- --- -->
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.png">
+  <link rel="icon" href="/img/favicon1.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#414643">
+  <meta name="author" content="Konrad Gerrens">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="CS61A-lab03-Q6-ChurchNumerals">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS61A-lab03-Q6_ChurchNumeral丘奇数">
+<meta property="og:url" content="https://www.updating.top/CS61A-lab03-ChurchNumeral/">
+<meta property="og:site_name" content="Ethereal State">
+<meta property="og:description" content="CS61A-lab03-Q6-ChurchNumerals">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202307091514452.png">
+<meta property="article:published_time" content="2023-07-09T07:09:34.000Z">
+<meta property="article:modified_time" content="2023-11-25T12:51:01.000Z">
+<meta property="article:author" content="Konrad Gerrens">
+<meta property="article:tag" content="CS61A">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202307091514452.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CS61A-lab03-Q6_ChurchNumeral丘奇数 - Ethereal State</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.updating.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Ethereal State" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Ethereal State</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CS61A-lab03-Q6_ChurchNumeral丘奇数"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-07-09 15:09" pubdate>
+          2023年7月9日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          42 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CS61A-lab03-Q6_ChurchNumeral丘奇数</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年11月25日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="Q6-Church-Numerals"><a href="#Q6-Church-Numerals" class="headerlink" title="Q6: Church Numerals"></a>Q6: Church Numerals</h2><blockquote>
+<p>The logician <code>Alonzo Church</code> invented a system of representing non-negative integers entirely using functions. The purpose was to show that functions are sufficient to describe all of number theory: if we have functions, we do not need to assume that numbers exist, but instead we can invent them.</p>
+<p>Your goal in this problem is to rediscover this representation known as <code>Church numerals</code>. <code>Church numerals</code> are a way to represent non-negative integers via repeated function application. Specifically, church numerals ( such as <code>zero</code>, <code>one</code>, and <code>two</code> below ) are <em>functions</em> that take in a function <code>f</code> and return a new function which, when called, repeats <code>f</code> a number of times on some argument <code>x</code>. Here are the definitions of <code>zero</code>, as well as a <code>successor</code> function, which takes in a church numeral <code>n</code> as an argument and returns a function that represents the church numeral one higher than <code>n</code>:</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">zero</span>(<span class="hljs-params">f</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: x<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">successor</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: f(n(f)(x))<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>First, define functions <code>one</code> and <code>two</code> such that they have the same behavior as <code>successor(zero)</code> and <code>successsor(successor(zero))</code> respectively, but <em>do not call <code>successor</code> in your implementation</em>.</p>
+<p>Next, implement a function <code>church_to_int</code> that converts a church numeral argument to a regular Python integer.</p>
+<p>Finally, implement functions <code>add_church</code>, <code>mul_church</code>, and <code>pow_church</code> that perform addition, multiplication, and exponentiation on church numerals.</p>
+</blockquote>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">one</span>(<span class="hljs-params">f</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Church numeral 1: same as successor(zero)&quot;&quot;&quot;</span><br>    <span class="hljs-string">&quot;*** YOUR CODE HERE ***&quot;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: f(x)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">two</span>(<span class="hljs-params">f</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Church numeral 2: same as successor(successor(zero))&quot;&quot;&quot;</span><br>    <span class="hljs-string">&quot;*** YOUR CODE HERE ***&quot;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x:f(f(x))<br><br>three = successor(two)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">church_to_int</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Convert the Church numeral n to a Python integer.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &gt;&gt;&gt; church_to_int(zero)</span><br><span class="hljs-string">    0</span><br><span class="hljs-string">    &gt;&gt;&gt; church_to_int(one)</span><br><span class="hljs-string">    1</span><br><span class="hljs-string">    &gt;&gt;&gt; church_to_int(two)</span><br><span class="hljs-string">    2</span><br><span class="hljs-string">    &gt;&gt;&gt; church_to_int(three)</span><br><span class="hljs-string">    3</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-string">&quot;*** YOUR CODE HERE ***&quot;</span><br>    <span class="hljs-keyword">return</span> n(<span class="hljs-keyword">lambda</span> x: x+<span class="hljs-number">1</span>)(<span class="hljs-number">0</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">add_church</span>(<span class="hljs-params">m, n</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Return the Church numeral for m + n, for Church numerals m and n.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &gt;&gt;&gt; church_to_int(add_church(two, three))</span><br><span class="hljs-string">    5</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-string">&quot;*** YOUR CODE HERE ***&quot;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: m(f)(n(f)(x))<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">mul_church</span>(<span class="hljs-params">m, n</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Return the Church numeral for m * n, for Church numerals m and n.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &gt;&gt;&gt; four = successor(three)</span><br><span class="hljs-string">    &gt;&gt;&gt; church_to_int(mul_church(two, three))</span><br><span class="hljs-string">    6</span><br><span class="hljs-string">    &gt;&gt;&gt; church_to_int(mul_church(three, four))</span><br><span class="hljs-string">    12</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-string">&quot;*** YOUR CODE HERE ***&quot;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> f: m(n(f))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pow_church</span>(<span class="hljs-params">m, n</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;Return the Church numeral m ** n, for Church numerals m and n.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    &gt;&gt;&gt; church_to_int(pow_church(two, three))</span><br><span class="hljs-string">    8</span><br><span class="hljs-string">    &gt;&gt;&gt; church_to_int(pow_church(three, two))</span><br><span class="hljs-string">    9</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-string">&quot;*** YOUR CODE HERE ***&quot;</span><br>    <span class="hljs-keyword">return</span> n(m)<br></code></pre></td></tr></table></figure>
+
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p>根据我们对<code>zero</code>和<code>successor</code>两个函数的观察，<code>zero</code>就相当于自然数<code>0</code>的定义，而<code>successor</code>实际上相当于一个递增函数。</p>
+<p>我们要做的，就是以这个<code>0</code>的定义为起点，定义出所有自然数以及他们的基础运算。</p>
+<p>题目中提到，函数<code>one</code>的行为应该和<code>successor(zero)</code>的行为一致，也就是说：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">one = successor(zero)<br>two = successor(one) = successor(successor(zero))<br></code></pre></td></tr></table></figure>
+
+
+
+<p>观察<code>successor</code>，可以仿照其结构写出<code>one</code>函数和<code>two</code>函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">one</span>(<span class="hljs-params">f</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: f(zero(f)(x))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">two</span>(<span class="hljs-params">f</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: f(one(f)(x))<br></code></pre></td></tr></table></figure>
+
+<p>其实，<code>zero(f)(x)</code>就是<code>x</code>，而<code>one(f)(x)</code>就是<code>f(x)</code>，所以我们也可以这样写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">one</span>(<span class="hljs-params">f</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: f(x)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">two</span>(<span class="hljs-params">f</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: f(f(x))<br></code></pre></td></tr></table></figure>
+
+<p>由<code>successor</code>的定义，我们可以发现自然数<code>N</code>对应的函数<code>n</code>的定义应当为：</p>
+<blockquote>
+<p><code>n(f) = f((n - 1)(f))=f(f(f(f(f(x)))))</code>  </p>
+<p>#n个<code>f</code></p>
+</blockquote>
+<p>如果我们按照这样的定义方式，定义自然数<code>n</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">n</span>(<span class="hljs-params">f</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: f((n-<span class="hljs-number">1</span>)(f)(x))<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="church-to-int"><a href="#church-to-int" class="headerlink" title="church_to_int"></a><code>church_to_int</code></h3><p> <code>church_to_int</code> 本质上就是计数嵌套的 <code>f</code>有多少个。每走一层就给计数变量加一。</p>
+<p>考虑将<code> f</code> 设置为自增函数 <code>increment</code> 。这样，传入的参数值就是计数变量的初值，函数的返回值就是终值了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">two</span>(<span class="hljs-params">f</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: f(f(x))<br><br>increment = <span class="hljs-keyword">lambda</span> x: x + <span class="hljs-number">1</span><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">church_to_int</span>(<span class="hljs-params">n</span>):<br>    <span class="hljs-keyword">return</span> n(increment)(<span class="hljs-number">0</span>)<br><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">e.g.</span><br><span class="hljs-string">	church_to_int(two)</span><br><span class="hljs-string">	↓</span><br><span class="hljs-string">	two(lambda x: x + 1)(0)</span><br><span class="hljs-string">	↓</span><br><span class="hljs-string">    ↓ # 构造two(f)</span><br><span class="hljs-string">	↓</span><br><span class="hljs-string">	(lambda x: x + 1)((lambda x: x + 1)(0))</span><br><span class="hljs-string">	↓</span><br><span class="hljs-string">	2</span><br><span class="hljs-string">&#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>事实上，有了<code>n(f)(x)</code>就是<code>n</code>的思想以后，用平常思维就可以写出答案正确的解：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add_church</span>(<span class="hljs-params">m, n</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: n(f)(x) + m(f)(x)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">mul_church</span>(<span class="hljs-params">m, n</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: m(f)(x) * n(f)(x)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pow_church</span>(<span class="hljs-params">m, n</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: m(f)(x) ** n(f)(x)<br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>显然，这不会也不应该是最佳答案</strong></p>
+<h3 id="add-church"><a href="#add-church" class="headerlink" title="add_church"></a><code>add_church</code></h3><p>我们把<code>m</code>和<code>n</code>各自看成整体。<code>m</code>是<code>m</code>个<code>f</code>函数嵌套的整体，可以看成是关于函数<code>f</code>的函数，<code>n</code>是<code>n</code>个<code>f</code>函数嵌套的整体.</p>
+<p>当<code>m</code>和<code>n</code>传入的参数<code>f</code>相同时，我们要求<code>m+n</code>，即想办法获得一个<code>m+n</code>层的高阶函数.</p>
+<p>用数学表达式为：<code>f(f(f(.....[f(f(f(x)))].....)))</code>，内部的括号为<code>n</code>层f嵌套，外层为<code>m</code>层括号嵌套。</p>
+<p>考虑计算 <code>m+n</code>，也就是把 <code>m+n</code>个<code> f</code> 套在一起。而我们知道<code>m(f)</code>可以实现 <code>m</code>次嵌套,<code>n(f)</code>可以实现 <code>n</code> 次嵌套。</p>
+<p>那么，我们在<code>n(f)</code>外面套一个<code>m(f)</code>即可：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">add_church</span>(<span class="hljs-params">m, n</span>):<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> f: <span class="hljs-keyword">lambda</span> x: m(f)(n(f)(x))<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="mul-church"><a href="#mul-church" class="headerlink" title="mul_church"></a><code>mul_church</code></h3><p>计算 <code>n×m</code>也就是 <code>m</code> 个<code> n</code> 相加，我们需要先把函数<code>f</code>嵌套<code>n</code>次，再把嵌套之后得到的<code>n</code>函数值嵌套<code>m</code>次。</p>
+<p>这一次对于<code>m</code>函数而言，它的参数不再是函数<code>f</code>，而是嵌套之后的函数值<code>n</code>。</p>
+<p>换言之，即 <code>n(f)</code> 自己套自己套上 <code>m</code>次：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">mul_church</span>(<span class="hljs-params">m, n</span>):<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> f: m(n(f))<br>	<span class="hljs-string">&#x27;&#x27;&#x27;or</span><br><span class="hljs-string">    return lambda f: lambda x: m(n(f))(x)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="pow-church"><a href="#pow-church" class="headerlink" title="pow_church"></a><code>pow_church</code></h3><p><code>m(f)</code> 的功用是将 <code>m</code>个<code> f</code> 嵌套起来，那么 <code>n(m(f))</code>的功用也就是将 <code>n</code>个<code>m(f)</code>嵌套起来，即</p>
+<p align='center'><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202307281702055.png" srcset="/img/loading.gif" lazyload style="zoom:50%;" /></p>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">pow_church</span>(<span class="hljs-params">m, n</span>):<br>    <span class="hljs-keyword">return</span> n(m)<br>    <span class="hljs-string">&#x27;&#x27;&#x27;or</span><br><span class="hljs-string">    return lambda f: n(m)(f)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h3><p><code>m x n</code>写成：<code>lambda f: m(n(f))</code>， <code>m^n</code>写成：<code>lambda f: n(m)(f)</code>。这两者看起来非常非常相似，为什么结果相差这么大呢？</p>
+<blockquote>
+<p>最简单的解释就是<strong>作用对象不同</strong>。</p>
+<p>先来看第一条：<code>lambda f: m(n(f))</code>。把<code>m</code>和<code>n</code>分别看成是一个整体，在这行代码当中，<code>n</code>接收了一个参数<code>f</code>。而<code>m</code>接收的参数是<code>n(f)</code>。我们可以做一个换元，我们假设<code>g = n(f)</code>，那么<code>m</code>函数的入参就是<code>g</code>。</p>
+<p>再来看第二条代码：<code>lambda f: n(m)(f)</code>，这里<code>m</code>函数没有入参，而<code>n</code>函数的入参是<code>m</code>。</p>
+<p>表面上一个入参是<code>n(f)</code>一个是<code>m</code>，好像差不多。其实相差很大。</p>
+<p><code>n(f)</code>是<code>n</code>函数作用于<code>f</code>上的结果，这个结果不再具备将函数嵌套<code>n</code>层的能力。所以外层再套上<code>m</code>函数，得到的也只是这个结果本身嵌套<code>m</code>次。</p>
+<p>而<code>n(m)</code>不同，传入的参数是<code>m</code>本身，而非<code>m</code>作用之后的结果，<code>m</code>函数的功能就是将输入的函数嵌套<code>m</code>次，所以当它经过<code>n</code>函数作用于自身的时候，总层数会不停地乘上<code>m</code>。</p>
+</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/505962536">日拱一卒，伯克利CS61A，作业3</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Shimarin/p/13823520.html">CS61A Homework: Church Numerals</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/267917164">记录一道颇有意思的CS61A python作业题Church numerals</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Major/" class="category-chain-item">Major</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Major/CS61A/" class="category-chain-item">CS61A</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CS61A/">#CS61A</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CS61A-lab03-Q6_ChurchNumeral丘奇数</div>
+      <div>https://www.updating.top/CS61A-lab03-ChurchNumeral/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Konrad Gerrens</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年7月9日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/CS61A-How-to-Learn/" title="怎样系统地学习CS61A——以CS61A（Fa22）为例">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">怎样系统地学习CS61A——以CS61A（Fa22）为例</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/HUST-physics-exps/" title="华中科技大学物理实验报告">
+                        <span class="hidden-mobile">华中科技大学物理实验报告</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.6.8/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://comment.updating.top","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
+              Fluid.plugins.imageCaption(imgSelector);
+              Fluid.plugins.fancyBox(imgSelector);
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <!-- <div class="footer-inner"> -->
+<div class="footer-inner" style="font-size: 0.85rem;">
+  <!--yiyan footer-->
+  
+    <div class="footer-content">
+       <div class="statistics"> <a target="_blank" rel="noopener" href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color: #DDD;"  id="hitokoto"></span></a> <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script> </div>
+    </div>
+  
+  <!-- -->
+  
+    <div class="footer-content">
+       Build by <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> with <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid Theme</span></a> <br/> © 2023 Konrad Gerrens <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+
+  
+  
+</div>
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

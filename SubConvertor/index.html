@@ -1,0 +1,828 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <!--LXGW font-->
+  <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+  <!---->
+  <!-- webspider -->
+  <meta name="baidu-site-verification" content="codeva-GNK5uXsCLO" />
+  <meta name="google-site-verification" content="7Mq8zQQEoIxqxJvemX8hlZtErGSJtATFN9SegHGJ2eg" />
+  <!-- --- -->
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.png">
+  <link rel="icon" href="/img/favicon1.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#414643">
+  <meta name="author" content="Konrad Gerrens">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基于Docker搭建订阅转换服务，clash也能实现分流规则自定义">
+<meta property="og:type" content="article">
+<meta property="og:title" content="海外VPS搭建SubConvertor订阅转换工具">
+<meta property="og:url" content="https://www.updating.top/SubConvertor/">
+<meta property="og:site_name" content="Ethereal State">
+<meta property="og:description" content="基于Docker搭建订阅转换服务，clash也能实现分流规则自定义">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310261058310.png">
+<meta property="article:published_time" content="2023-10-23T06:10:40.000Z">
+<meta property="article:modified_time" content="2023-11-12T13:00:07.000Z">
+<meta property="article:author" content="Konrad Gerrens">
+<meta property="article:tag" content="VPS">
+<meta property="article:tag" content="Proxy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310261058310.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>海外VPS搭建SubConvertor订阅转换工具 - Ethereal State</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.updating.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Ethereal State" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Ethereal State</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="海外VPS搭建SubConvertor订阅转换工具"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-10-23 14:10" pubdate>
+          2023年10月23日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          54 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">海外VPS搭建SubConvertor订阅转换工具</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年11月12日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="海外VPS搭建SubConvertor订阅转换工具"><a href="#海外VPS搭建SubConvertor订阅转换工具" class="headerlink" title="海外VPS搭建SubConvertor订阅转换工具"></a>海外VPS搭建SubConvertor订阅转换工具</h1><blockquote>
+<p>示例链接：<a target="_blank" rel="noopener" href="https://convertor.wisedrifter.top/">SubConverter</a></p>
+<p>博主自用规则文件：<a target="_blank" rel="noopener" href="https://github.com/MegaSuite/Clash-Configs/blob/main/Policy/ClashGeneral.ini">Clash-Configs&#x2F;Policy&#x2F;ClashGeneral.ini</a></p>
+</blockquote>
+<blockquote>
+<p>教程由以下两部分组成：</p>
+<ul>
+<li>后端 subconverter</li>
+<li>前端 sub-web</li>
+</ul>
+</blockquote>
+<h2 id="后端搭建"><a href="#后端搭建" class="headerlink" title="后端搭建"></a>后端搭建</h2><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">docker <span class="hljs-keyword">run</span><span class="language-bash"> -d \</span><br><span class="language-bash">	--restart=always \</span><br><span class="language-bash">	--name subconverter \</span><br><span class="language-bash">	-p 34324:25500 \</span><br><span class="language-bash">	tindy2013/subconverter:latest</span><br>	<br><span class="hljs-comment">#-p 外部映射端口自选，与下方同步即可</span><br></code></pre></td></tr></table></figure>
+
+<div class="note note-success">
+            <p>注意在<strong>服务商控制台</strong>安全组里放行相应端口，<strong>不要</strong>用宝塔放行，大部分不生效。</p>
+          </div>
+
+<blockquote>
+<p>#-p 外部映射端口任意选择，<strong>不冲突</strong>即可，内部暴露端口不建议改，根据镜像作者的说明来，有的镜像更改会出问题。</p>
+<p>由于Docker的内部端口是独立的，所以内部暴露端口不需要考虑冲突问题，也就是冒号后面的端口可以在不同容器间重复，比如有很多容器的暴露端口都是<code>8080</code>。</p>
+<p>外部映射端口，也就是冒号前面的端口是不能重复的，因为这是宿主机的端口，每个端口都是唯一的，不能复用。</p>
+<p>#–name 根据需要更改</p>
+</blockquote>
+<p>使用<code>docker ps</code>查看运行中的容器。</p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310271931496.png" srcset="/img/loading.gif" lazyload alt="container"></p>
+<p>运行之后，使用以下命令查看状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl http://localhost:34324/version<br><span class="hljs-comment"># 如果出现`subconverter vx.x.x backend`字样，表明运行成功</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310271930936.png" srcset="/img/loading.gif" lazyload alt="success"></p>
+<p>根据需要为后端绑定域名，配置反代（可选，可以直接用<code>ip:port</code>访问）</p>
+<blockquote>
+<p>以下示意图引用自博主另一篇文章，端口不对应，注意更改</p>
+</blockquote>
+<p>在域名提供商处设置<code>DNS</code>记录</p>
+<p>当然，添加网站和<code>SSL</code>证书申请是必要的前期工作。</p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310271934061.png" srcset="/img/loading.gif" lazyload alt="添加网站"></p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310271934224.png" srcset="/img/loading.gif" lazyload alt="申请证书"></p>
+<p>开启反向代理，代理到本地相应端口。</p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310271934112.png" srcset="/img/loading.gif" lazyload alt="settings"></p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310271934964.png" srcset="/img/loading.gif" lazyload alt="reproxy"></p>
+<h2 id="前端搭建"><a href="#前端搭建" class="headerlink" title="前端搭建"></a>前端搭建</h2><p>使用<code>docker</code>运行前端需要更改文件后自行构建镜像。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Clone项目到本地 </span><br>git <span class="hljs-built_in">clone</span> https://github.com/CareyWang/sub-web.git<br><span class="hljs-built_in">cd</span> sub-web <br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 编辑.env配置文件(也可搭配其他文件编辑器，如VScode)</span><br>vi .<span class="hljs-built_in">env</span> <br></code></pre></td></tr></table></figure>
+
+<p>进入<code>.env</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 没有其他需求就只改`API后端`就行。</span><br><br>VUE_APP_PROJECT = <span class="hljs-string">&quot;https://github.com/CareyWang/sub-web&quot;</span><br><br>VUE_APP_BOT_LINK = <span class="hljs-string">&quot;https://t.me/subconverter_discuss&quot;</span><br><br>VUE_APP_BACKEND_RELEASE = <span class="hljs-string">&quot;https://github.com/tindy2013/subconverter/actions&quot;</span><br><br>VUE_APP_SUBCONVERTER_REMOTE_CONFIG = <span class="hljs-string">&quot;https://raw.githubusercontent.com/tindy2013/subconverter/master/base/config/example_external_config.ini&quot;</span><br><br><span class="hljs-comment"># API 后端，填写自己绑定的域名，或者`ip:port`</span><br>VUE_APP_SUBCONVERTER_DEFAULT_BACKEND = <span class="hljs-string">&quot;https://sub.wisedrifter.top&quot;</span><br><br><span class="hljs-comment"># 短链接后端（可选）</span><br>VUE_APP_MYURLS_API = <span class="hljs-string">&quot;https://suo.yt/short&quot;</span><br><br><span class="hljs-comment"># 文本托管后端</span><br>VUE_APP_CONFIG_UPLOAD_API = <span class="hljs-string">&quot;https://oss.wcc.best/upload&quot;</span><br><br><span class="hljs-comment"># 页面配置</span><br>VUE_APP_USE_STORAGE = <span class="hljs-literal">true</span> <br>VUE_APP_CACHE_TTL = 86400<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 编辑subconverter.vue</span><br><span class="hljs-built_in">cd</span> src/views <br>vi Subconverter.vue  <br></code></pre></td></tr></table></figure>
+
+<p>进入<code>subconverter.vue</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 修改下列内容</span><br><br><span class="hljs-comment"># 修改后端，填你刚才搭建的后端，注意后面的`/sub?`</span><br>backendOptions: [&#123; value: <span class="hljs-string">&quot;https://sub.wisedrifter.top/sub?&quot;</span> &#125;],<br><br><span class="hljs-comment"># 修改远程配置，第一个为博主自己写的配置，包含`Disney+`,`Netflix`,`Prime Video`,`OneDrive`等常用分流</span><br>remoteConfig: [<br>          &#123;<br>            label: <span class="hljs-string">&quot;universal&quot;</span>,<br>            options: [<br>              &#123;<br>                label:<span class="hljs-string">&quot;Konrad自用分流，（Github：MegaSuite）&quot;</span>,<br>                value:<br>                <span class="hljs-string">&quot;https://raw.githubusercontent.com/MegaSuite/Clash-Configs/main/Policy/ClashGeneral.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online 默认版 分组比较全 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_AdblockPlus 更多去广告 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_AdblockPlus.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_NoAuto 无自动测速 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_NoAuto.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_NoReject 无广告拦截规则 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_NoReject.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_Mini 精简版 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_Mini_AdblockPlus.ini 精简版 更多去广告 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_AdblockPlus.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_Mini_NoAuto.ini 精简版 不带自动测速 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_NoAuto.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_Mini_Fallback.ini 精简版 带故障转移 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_Fallback.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_Mini_MultiMode.ini 精简版 自动测速、故障转移、负载均衡 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Mini_MultiMode.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_Full 全分组 重度用户使用 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_Full_NoAuto.ini 全分组 无自动测速 重度用户使用 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_NoAuto.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_Full_AdblockPlus 全分组 重度用户使用 更多去广告 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_AdblockPlus.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Online_Full_Netflix 全分组 重度用户使用 奈飞全量 (与Github同步)&quot;</span>,<br>                value:<br>                  <span class="hljs-string">&quot;https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/config/ACL4SSR_Online_Full_Netflix.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR 本地 默认版 分组比较全&quot;</span>,<br>                value: <span class="hljs-string">&quot;config/ACL4SSR.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Mini 本地 精简版&quot;</span>,<br>                value: <span class="hljs-string">&quot;config/ACL4SSR_Mini.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Mini_NoAuto.ini 本地 精简版+无自动测速&quot;</span>,<br>                value: <span class="hljs-string">&quot;config/ACL4SSR_Mini_NoAuto.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_Mini_Fallback.ini 本地 精简版+fallback&quot;</span>,<br>                value: <span class="hljs-string">&quot;config/ACL4SSR_Mini_Fallback.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_BackCN 本地 回国&quot;</span>,<br>                value: <span class="hljs-string">&quot;config/ACL4SSR_BackCN.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_NoApple 本地 无苹果分流&quot;</span>,<br>                value: <span class="hljs-string">&quot;config/ACL4SSR_NoApple.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_NoAuto 本地 无自动测速 &quot;</span>,<br>                value: <span class="hljs-string">&quot;config/ACL4SSR_NoAuto.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_NoAuto_NoApple 本地 无自动测速&amp;无苹果分流&quot;</span>,<br>                value: <span class="hljs-string">&quot;config/ACL4SSR_NoAuto_NoApple.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_NoMicrosoft 本地 无微软分流&quot;</span>,<br>                value: <span class="hljs-string">&quot;config/ACL4SSR_NoMicrosoft.ini&quot;</span><br>              &#125;,<br>              &#123;<br>                label: <span class="hljs-string">&quot;ACL4SSR_WithGFW 本地 GFW列表&quot;</span>,<br>                value: <span class="hljs-string">&quot;config/ACL4SSR_WithGFW.ini&quot;</span><br>              &#125;<br>            ]<br>          &#125;,<br>        ]<br></code></pre></td></tr></table></figure>
+
+<p>代码结构如下：</p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310271947399.png" srcset="/img/loading.gif" lazyload alt="subconverter.vue"></p>
+<p>保存之后，进行镜像构建。</p>
+<blockquote>
+<p>注意最后的”<code>.</code>“，不要漏掉。</p>
+<p>冒号前的<code>sub-web</code>是目前存放前端的文件夹名</p>
+<p>构建命令需要在前端文件夹内执行，否则会提醒<code>找不到Dockerfile</code></p>
+</blockquote>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-comment">#构建镜像</span><br>docker build -t sub-web:latest .  <br><span class="hljs-comment">#查看镜像是否构建成功,有同名镜像即为成功</span><br>docker images<br><span class="hljs-comment">#部署服务 </span><br>docker <span class="hljs-keyword">run</span><span class="language-bash"> -d \</span><br><span class="language-bash">	-p 34325:80 \</span><br><span class="language-bash">	--restart always \</span><br><span class="language-bash">	--name subweb \</span><br><span class="language-bash">	sub-web:latest</span><br></code></pre></td></tr></table></figure>
+
+<p>执行<code>docker ps</code>查看状态</p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310271957970.png" srcset="/img/loading.gif" lazyload alt="sub-web"></p>
+<p>浏览器中输入<code>ip:port</code>可以看到网页，如<code>123.11.112.111:34325</code></p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310272000366.png" srcset="/img/loading.gif" lazyload alt="page"></p>
+<p>同样可以为前端设置域名和反代，跟前面的流程相同，不赘述。</p>
+<p>到现在为止，一个完整的私有订阅转换就搭建完了。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/tindy2013/subconverter">tindy2013&#x2F;subconverter</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/tindy2013/subconverter/blob/master/README-docker.md">subconverter&#x2F;README-docker.md</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/CareyWang/sub-web">CareyWang&#x2F;sub-web</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.steveee.me/posts/Subconverter/">Subconverter+Subweb+MyUrls搭建教程 (Docker版本) - Steve’s Blog</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/MegaSuite/Clash-Configs/blob/main/Policy/ClashGeneral.ini">Clash-Configs&#x2F;Policy&#x2F;ClashGeneral.ini</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Major/" class="category-chain-item">Major</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Major/Proxies/" class="category-chain-item">Proxies</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/VPS/">#VPS</a>
+      
+        <a href="/tags/Proxy/">#Proxy</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>海外VPS搭建SubConvertor订阅转换工具</div>
+      <div>https://www.updating.top/SubConvertor/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Konrad Gerrens</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年10月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Comment-Twikoo-LskyPro/" title="使用Twikoo和LskyPro搭建完善的私有评论系统">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">使用Twikoo和LskyPro搭建完善的私有评论系统</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Trojan-Proxy/" title="海外VPS使用Trojan协议搭建代理">
+                        <span class="hidden-mobile">海外VPS使用Trojan协议搭建代理</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.6.8/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://comment.updating.top","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
+              Fluid.plugins.imageCaption(imgSelector);
+              Fluid.plugins.fancyBox(imgSelector);
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <!-- <div class="footer-inner"> -->
+<div class="footer-inner" style="font-size: 0.85rem;">
+  <!--yiyan footer-->
+  
+    <div class="footer-content">
+       <div class="statistics"> <a target="_blank" rel="noopener" href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color: #DDD;"  id="hitokoto"></span></a> <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script> </div>
+    </div>
+  
+  <!-- -->
+  
+    <div class="footer-content">
+       Build by <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> with <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid Theme</span></a> <br/> © 2023 Konrad Gerrens <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+
+  
+  
+</div>
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

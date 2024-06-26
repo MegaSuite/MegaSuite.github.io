@@ -1,0 +1,807 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <!--LXGW font-->
+  <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+  <!---->
+  <!-- webspider -->
+  <meta name="baidu-site-verification" content="codeva-GNK5uXsCLO" />
+  <meta name="google-site-verification" content="7Mq8zQQEoIxqxJvemX8hlZtErGSJtATFN9SegHGJ2eg" />
+  <!-- --- -->
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon1.png">
+  <link rel="icon" href="/img/favicon1.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#414643">
+  <meta name="author" content="Konrad Gerrens">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="how to use &#39;yield&#39; keyword in Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS61A-hw05_Yield关键词的应用">
+<meta property="og:url" content="https://www.updating.top/CS61A-hw05-Yield/">
+<meta property="og:site_name" content="Ethereal State">
+<meta property="og:description" content="how to use &#39;yield&#39; keyword in Python">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202307091514452.png">
+<meta property="article:published_time" content="2023-08-01T09:48:36.000Z">
+<meta property="article:modified_time" content="2023-10-31T03:06:02.000Z">
+<meta property="article:author" content="Konrad Gerrens">
+<meta property="article:tag" content="CS61A">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202307091514452.png">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>CS61A-hw05_Yield关键词的应用 - Ethereal State</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.updating.top","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"§"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.2.0"><link rel="alternate" href="/atom.xml" title="Ethereal State" type="application/atom+xml">
+</head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Ethereal State</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="CS61A-hw05_Yield关键词的应用"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-08-01 17:48" pubdate>
+          2023年8月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          27 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CS61A-hw05_Yield关键词的应用</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年10月31日 上午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="CS61A-hw05-Yield关键词的应用"><a href="#CS61A-hw05-Yield关键词的应用" class="headerlink" title="CS61A-hw05_Yield关键词的应用"></a>CS61A-hw05_Yield关键词的应用</h1><blockquote>
+<p> 为了理解<code>yield</code>的原理，我们必须首先理解生成器和迭代器的原理。</p>
+</blockquote>
+<h2 id="迭代器（Iterables）"><a href="#迭代器（Iterables）" class="headerlink" title="迭代器（Iterables）"></a>迭代器（Iterables）</h2><p>创建一个列表，我们可以依次读取列表中的元素，这种依次读取输出元素的行为称为迭代，被读取的对象称为迭代器。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-meta">&gt;&gt;&gt; </span>lst = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> lst:<br><span class="hljs-meta">... </span>   <span class="hljs-built_in">print</span>(i)<br><span class="hljs-number">1</span><br><span class="hljs-number">2</span><br><span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+
+<p>也可以通过列表推导式创建列表（迭代器）。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-meta">&gt;&gt;&gt; </span>lst = [x*x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>)]<span class="hljs-comment">#········@1</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> lst:<br><span class="hljs-meta">... </span>   <span class="hljs-built_in">print</span>(i)<br><span class="hljs-number">0</span><br><span class="hljs-number">1</span><br><span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+
+<p>一切可以通过<code>for...in...</code>进行迭代的对象都可以成为迭代器。迭代器的特征是将所需元素储存起来，以供读取，但当数据量很大时，使用迭代器产生数据则不是一个明智的选择，比如将上述代码<code>@1</code>行中<code>range(3)</code>里的数字改为极其庞大的数字，在<code>@1</code>行代码运行之后，程序便生成一个极占内存的大列表<code>lst</code>，但我们只是想输出一些数，没有必要使一个如此简单的行为消耗那么多资源，由此，我们就需要生成器的帮助。</p>
+<h2 id="生成器（Generators）"><a href="#生成器（Generators）" class="headerlink" title="生成器（Generators）"></a>生成器（Generators）</h2><p>生成器可以认为是迭代器的一种，不过只能依次迭代使用一次，不能重复迭代。生成器的特点是不储存生成值，即用即产，动态生成。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-meta">&gt;&gt;&gt; </span>gen = (x*x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>))<span class="hljs-comment">#yield_atom</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> gen:<br><span class="hljs-meta">... </span>   <span class="hljs-built_in">print</span>(i)<br><span class="hljs-number">0</span><br><span class="hljs-number">1</span><br><span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+
+<p>可见，生成器推导式与列表推导式的差距只在<code>()</code>和<code>[]</code>上，而且生成器对象只能迭代一次（继续迭代会抛出<code>StopIteration</code>错误）。</p>
+<h2 id="Yield"><a href="#Yield" class="headerlink" title="Yield"></a>Yield</h2><p><code>yield</code> 表达式的使用类似于<code>return</code>（详细用法参见<strong>Official Definition</strong>章节），区别在<code>yield</code>会使函数变为生成器函数。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">def</span> <span class="hljs-title function_">create_gen</span>():<br><span class="hljs-meta">... </span>   lst = <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>)<br><span class="hljs-meta">... </span>   <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> lst:<br><span class="hljs-meta">... </span>       <span class="hljs-keyword">yield</span> i*i<br>...<br><span class="hljs-meta">&gt;&gt;&gt; </span>gen = create_gen() <span class="hljs-comment"># 创建生成器</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">print</span>(gen) <span class="hljs-comment"># gen是一个生成器对象</span><br>&lt;generator <span class="hljs-built_in">object</span> create_gen at <span class="hljs-number">0xb7555c34</span>&gt;<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> gen:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(i)<br><span class="hljs-number">0</span><br><span class="hljs-number">1</span><br><span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
+
+<p>生成器在产生只需要生成一次的输出序列时有很大的优势。迭代（比如<code>for</code>)第一次调用从函数创建的生成器对象时，它将从开头运行函数中的代码，直到到达<code>yield</code>，然后返回循环的第一个值。之后，每个后续调用都将运行在函数中编写的循环的另一次迭代，并返回下一个值，生成器函数体内的代码以<code>yield</code>语句所在处分界，某次循环开始时，函数会从上一次<code>yield</code>停止处开始运行（即运行<code>yield</code>的下一行），直到生成器被判定为空（<code>StopIteration</code>)。</p>
+<h2 id="Official-Definition-1"><a href="#Official-Definition-1" class="headerlink" title="Official Definition[1]"></a>Official Definition<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="[6. Expressions — Python 3.12.0 documentation](https://docs.python.org/3/reference/expressions.html#grammar-token-python-grammar-yield_expression)">[1]</span></a></sup></h2><p><em><strong>6.2.9. Yield expressions</strong></em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">yield_atom       ::=  <span class="hljs-string">&quot;(&quot;</span> yield_expression <span class="hljs-string">&quot;)&quot;</span><span class="hljs-comment">#使用&quot;()&quot;包裹生成器推导式,产生生成器</span><br>yield_expression ::=  <span class="hljs-string">&quot;yield&quot;</span> [expression_list | <span class="hljs-string">&quot;from&quot;</span> expression]<span class="hljs-comment">#作为表达式在函数体中使用</span><br></code></pre></td></tr></table></figure>
+
+<p>yield 表达式在定义 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/glossary.html#term-generator">generator</a> 函数或 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/glossary.html#term-asynchronous-generator">asynchronous generator</a> 函数时才会用到因此只能在函数定义的内部使用。 在一个函数体内使用 yield 表达式会使这个函数变成一个生成器函数，而在一个 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/compound_stmts.html#async-def"><code>async def</code></a> 函数的内部使用它则会让这个协程函数变成一个异步生成器函数。 例如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">gen</span>():  <span class="hljs-comment"># defines a generator function</span><br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">123</span><br><br><span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">agen</span>(): <span class="hljs-comment"># defines an asynchronous generator function</span><br>    <span class="hljs-keyword">yield</span> <span class="hljs-number">123</span><br></code></pre></td></tr></table></figure>
+
+<p>由于它们会对外层作用域造成附带影响，<code>yield</code> 表达式不被允许作为用于实现推导式和生成器表达式的隐式定义作用域的一部分。</p>
+<blockquote>
+<p><em>在 3.8 版更改:</em> 禁止在实现推导式和生成器表达式的隐式嵌套作用域中使用 yield 表达式。</p>
+</blockquote>
+<p>下面是对生成器函数的描述，异步生成器函数会在 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/expressions.html?highlight=yield#asynchronous-generator-functions">异步生成器函数</a> 一节中单独介绍。</p>
+<p>当一个生成器函数被调用时，它返回一个名为生成器的迭代器。 然后这个生成器将控制生成器函数的执行。 执行过程会在这个生成器的某个方法被调用时开始。 这时，函数会执行到第一个 yield 表达式，在这里它将再次被挂起，向生成器的调用方返回 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/expressions.html?highlight=yield#grammar-token-python-grammar-expression_list"><code>expression_list</code></a> 的值，或者如果 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/expressions.html?highlight=yield#grammar-token-python-grammar-expression_list"><code>expression_list</code></a> 被省略则返回 <code>None</code>。 这里所谓的挂起，就是说所有局部状态都会被保留下来，包括局部变量的当前绑定、指令指针、内部求值栈和任何异常处理等等。 当通过调用生成器的某个方法恢复执行时，这个函数的运行就与 yield 表达式只是一个外部调用的情况完全一样。 恢复之后 yield 表达式的值取决于恢复执行所调用的方法。 如果是用 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/expressions.html?highlight=yield#generator.__next__"><code>__next__()</code></a> (通常是通过 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/compound_stmts.html#for"><code>for</code></a> 或 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/functions.html#next"><code>next()</code></a> 内置函数) 则结果为 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/constants.html#None"><code>None</code></a>。 在其他情况下，如果是用 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/expressions.html?highlight=yield#generator.send"><code>send()</code></a>，则结果将为传给该方法的值。</p>
+<p>所有这些使生成器函数与协程非常相似；它们 yield 多次，它们具有多个入口点，并且它们的执行可以被挂起。唯一的区别是生成器函数不能控制在它在 yield 后交给哪里继续执行；控制权总是转移到生成器的调用者。</p>
+<p>在 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/compound_stmts.html#try"><code>try</code></a> 结构中的任何位置都允许yield表达式。如果生成器在(因为引用计数到零或是因为被垃圾回收)销毁之前没有恢复执行，将调用生成器-迭代器的 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/expressions.html?highlight=yield#generator.close"><code>close()</code></a> 方法. close 方法允许任何挂起的 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/compound_stmts.html#finally"><code>finally</code></a> 子句执行。</p>
+<p>当使用 <code>yield from &lt;expr&gt;</code> 时，所提供的表达式必须是一个可迭代对象。 迭代该可迭代对象所产生的值会被直接传递给当前生成器方法的调用者。 任何通过 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/expressions.html?highlight=yield#generator.send"><code>send()</code></a> 传入的值以及任何通过 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/expressions.html?highlight=yield#generator.throw"><code>throw()</code></a> 传入的异常如果有适当的方法则会被传给下层迭代器。 如果不是这种情况，那么 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/expressions.html?highlight=yield#generator.send"><code>send()</code></a> 将引发 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/exceptions.html#AttributeError"><code>AttributeError</code></a> 或 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/exceptions.html#TypeError"><code>TypeError</code></a>，而 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/expressions.html?highlight=yield#generator.throw"><code>throw()</code></a> 将立即引发所转入的异常。</p>
+<p>当下层迭代器完成时，被引发的 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/exceptions.html#StopIteration"><code>StopIteration</code></a> 实例的 <code>value</code> 属性会成为 yield 表达式的值。 它可以在引发 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/exceptions.html#StopIteration"><code>StopIteration</code></a> 时被显式地设置，也可以在子迭代器是一个生成器时自动地设置（通过从子生成器返回一个值）。</p>
+<blockquote>
+<p><em>在 3.3 版更改:</em> 添加 <code>yield from &lt;expr&gt;</code> 以委托控制流给一个子迭代器。</p>
+</blockquote>
+<p>当yield表达式是赋值语句右侧的唯一表达式时，括号可以省略。</p>
+<p>参见</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://peps.python.org/pep-0255/"><strong>PEP 255</strong></a> - 简单生成器</p>
+<p>在 Python 中加入生成器和 <a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/reference/simple_stmts.html#yield"><code>yield</code></a> 语句的提议。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://peps.python.org/pep-0342/"><strong>PEP 342</strong></a> - 通过增强型生成器实现协程</p>
+<p>增强生成器 API 和语法的提议，使其可以被用作简单的协程。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://peps.python.org/pep-0380/"><strong>PEP 380</strong></a> - 委托给子生成器的语法</p>
+<p>引入 <code>yield_from</code> 语法的提议，以方便地委托给子生成器。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://peps.python.org/pep-0525/"><strong>PEP 525</strong></a> - 异步生成器</p>
+<p>通过给协程函数加入生成器功能对 <a target="_blank" rel="noopener" href="https://peps.python.org/pep-0492/"><strong>PEP 492</strong></a> 进行扩展的提议。</p>
+</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://docs.python.org/3/reference/expressions.html#grammar-token-python-grammar-yield_expression">6. Expressions — Python 3.12.0 documentation</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python?page=1&tab=scoredesc#tab-top">iterator - What does the “yield” keyword do in Python? - Stack Overflow</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33751566/article/details/92288708">python生成器-CSDN博客</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Major/" class="category-chain-item">Major</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Major/CS61A/" class="category-chain-item">CS61A</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CS61A/">#CS61A</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>CS61A-hw05_Yield关键词的应用</div>
+      <div>https://www.updating.top/CS61A-hw05-Yield/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Konrad Gerrens</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年8月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Special-Domain-for-Your-University/" title="如何给你的大学官网整一个「奇怪」的域名">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">如何给你的大学官网整一个「奇怪」的域名</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/TheRoadNotTaken/" title="科幻-异星歧途(TheRoadNotTaken)">
+                        <span class="hidden-mobile">科幻-异星歧途(TheRoadNotTaken)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="twikoo"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#comments', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/twikoo/1.6.8/twikoo.all.min.js', function() {
+        var options = Object.assign(
+          {"envId":"https://comment.updating.top","region":"ap-shanghai","path":"window.location.pathname"},
+          {
+            el: '#twikoo',
+            path: 'window.location.pathname',
+            onCommentLoaded: function() {
+              var imgSelector = '#twikoo .tk-content img:not(.tk-owo-emotion)';
+              Fluid.plugins.imageCaption(imgSelector);
+              Fluid.plugins.fancyBox(imgSelector);
+            }
+          }
+        )
+        twikoo.init(options)
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <!-- <div class="footer-inner"> -->
+<div class="footer-inner" style="font-size: 0.85rem;">
+  <!--yiyan footer-->
+  
+    <div class="footer-content">
+       <div class="statistics"> <a target="_blank" rel="noopener" href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color: #DDD;"  id="hitokoto"></span></a> <script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script> </div>
+    </div>
+  
+  <!-- -->
+  
+    <div class="footer-content">
+       Build by <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> with <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid Theme</span></a> <br/> © 2023 Konrad Gerrens <div style="font-size: 0.85rem"> <span id="timeDate">载入天数...</span> <span id="times">载入时分秒...</span> <script src="/js/duration.js"></script> </div> 
+    </div>
+  
+  
+
+  
+  
+</div>
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
