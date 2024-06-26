@@ -1,0 +1,41 @@
+<!-- <div class="footer-inner"> -->
+<div class="footer-inner" style="font-size: 0.85rem;">
+  <!--yiyan footer-->
+  <% if (theme.footer.content2) { %>
+    <div class="footer-content">
+      <%- theme.footer.content2 %>
+    </div>
+  <% } %>
+  <!-- -->
+  <% if (theme.footer.content) { %>
+    <div class="footer-content">
+      <%- theme.footer.content %>
+    </div>
+  <% } %>
+  <% if (theme.footer.statistics.enable) { %>
+    <%- partial('_partials/footer/statistics.ejs') %>
+  <% } %>
+
+  <% if(theme.footer.beian.enable) { %>
+    <!-- 备案信息 ICP for China -->
+    <%- partial('_partials/footer/beian.ejs') %>
+  <% } %>
+  <% if(theme.web_analytics.cnzz) { %>
+    <!-- cnzz Analytics Icon -->
+    <span id="cnzz_stat_icon_<%= theme.web_analytics.cnzz %>" style="display: none"></span>
+  <% } %>
+</div>
+<script>
+  (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else {
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+  })();
+  </script>

@@ -1,0 +1,16 @@
+# www.updating.top robots.txt
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /categories/
+Allow: /tags/
+Allow: /about/
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /vendors/
+Disallow: /fancybox/
+
+Sitemap: https://www.updating.top/sitemap.xml
+Sitemap: https://www.updating.top/baidusitemap.xml
