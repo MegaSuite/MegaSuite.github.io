@@ -860,7 +860,7 @@ remark42:
 # Based on Tencent CloudBase
 # See: https://twikoo.js.org
 twikoo:
-  envId: https://comment.updating.top
+  envId: https://cmt.0co.dev
   region: ap-shanghai
   path: window.location.pathname
 
