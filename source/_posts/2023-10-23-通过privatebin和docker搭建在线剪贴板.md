@@ -358,6 +358,18 @@ dir = PATH "data"
 ; apiurl = "https://yourls.example.com/yourls-api.php"
 ```
 
+## FAQ
+
+### 无法创建粘贴：保存粘贴内容时出现错误，抱歉。
+
+所映射的data目录权限不足，需要进行权限修改
+
+以下仅供参考，如有安全考虑，需使用更严谨的安全策略
+
+```sh
+chmod -R 777 /root/privatebin/data
+```
+
 
 
 >尽情使用属于你自己的在线剪贴板吧
