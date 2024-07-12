@@ -234,13 +234,6 @@
   </url>
   
   <url>
-    <loc>https://www.0co.dev/tags/HUST/</loc>
-    <lastmod>2024-07-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.0co.dev/tags/Answer/</loc>
     <lastmod>2024-07-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -269,13 +262,6 @@
   </url>
   
   <url>
-    <loc>https://www.0co.dev/tags/Algorithm/</loc>
-    <lastmod>2024-07-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.0co.dev/tags/Github/</loc>
     <lastmod>2024-07-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -290,14 +276,14 @@
   </url>
   
   <url>
-    <loc>https://www.0co.dev/tags/Game/</loc>
+    <loc>https://www.0co.dev/tags/HUST/</loc>
     <lastmod>2024-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://www.0co.dev/tags/XBOX/</loc>
+    <loc>https://www.0co.dev/tags/Algorithm/</loc>
     <lastmod>2024-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -318,7 +304,14 @@
   </url>
   
   <url>
-    <loc>https://www.0co.dev/tags/Docker/</loc>
+    <loc>https://www.0co.dev/tags/Game/</loc>
+    <lastmod>2024-07-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.0co.dev/tags/XBOX/</loc>
     <lastmod>2024-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -326,6 +319,13 @@
   
   <url>
     <loc>https://www.0co.dev/tags/Trojan/</loc>
+    <lastmod>2024-07-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.0co.dev/tags/Docker/</loc>
     <lastmod>2024-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -348,13 +348,6 @@
   </url>
   
   <url>
-    <loc>https://www.0co.dev/categories/Major/Hexo/</loc>
-    <lastmod>2024-07-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://www.0co.dev/categories/Major/CS61A/</loc>
     <lastmod>2024-07-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -362,7 +355,7 @@
   </url>
   
   <url>
-    <loc>https://www.0co.dev/categories/HUST/Answer/</loc>
+    <loc>https://www.0co.dev/categories/Major/Hexo/</loc>
     <lastmod>2024-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -370,6 +363,13 @@
   
   <url>
     <loc>https://www.0co.dev/categories/Daily/</loc>
+    <lastmod>2024-07-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.0co.dev/categories/HUST/Answer/</loc>
     <lastmod>2024-07-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
