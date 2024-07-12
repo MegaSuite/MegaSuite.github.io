@@ -23,28 +23,26 @@
   <meta name="author" content="Konrad Gerrens">
   <meta name="keywords" content="">
   
-    <meta name="description" content="通过Trojan协议搭建代理，实现快速安全访问">
+    <meta name="description" content="使用YOURLS Docker版，搭建短链接服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="海外VPS使用Trojan协议搭建代理">
-<meta property="og:url" content="https://www.0co.dev/Trojan-Proxy/">
+<meta property="og:title" content="使用YOURLS Docker版，搭建短链接服务">
+<meta property="og:url" content="https://www.0co.dev/yourls-docker/">
 <meta property="og:site_name" content="Ethereal State">
-<meta property="og:description" content="通过Trojan协议搭建代理，实现快速安全访问">
+<meta property="og:description" content="使用YOURLS Docker版，搭建短链接服务">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310231415554.jpg">
-<meta property="article:published_time" content="2023-10-23T06:09:29.000Z">
-<meta property="article:modified_time" content="2023-11-10T14:20:52.000Z">
+<meta property="og:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121459709.png">
+<meta property="article:published_time" content="2024-07-12T06:57:06.000Z">
+<meta property="article:modified_time" content="2024-07-12T07:57:06.803Z">
 <meta property="article:author" content="Konrad Gerrens">
-<meta property="article:tag" content="VPS">
-<meta property="article:tag" content="Proxy">
-<meta property="article:tag" content="Trojan">
+<meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202310231415554.jpg">
+<meta name="twitter:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121459709.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>海外VPS使用Trojan协议搭建代理 - Ethereal State</title>
+  <title>使用YOURLS Docker版，搭建短链接服务 - Ethereal State</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -226,7 +224,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="海外VPS使用Trojan协议搭建代理"></span>
+            <span id="subtitle" data-typed-text="使用YOURLS Docker版，搭建短链接服务"></span>
           
         </div>
 
@@ -237,8 +235,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-10-23 14:09" pubdate>
-          2023年10月23日 下午
+        <time datetime="2024-07-12 14:57" pubdate>
+          2024年7月12日 下午
         </time>
       </span>
     
@@ -249,7 +247,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          776 字
+          2.3k 字
         
       </span>
     
@@ -260,7 +258,7 @@
         
         
         
-          7 分钟
+          20 分钟
         
       </span>
     
@@ -306,12 +304,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">海外VPS使用Trojan协议搭建代理</h1>
+            <h1 style="display: none">使用YOURLS Docker版，搭建短链接服务</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年11月10日 晚上
+                    本文最后更新于：2024年7月12日 下午
                   
                 
               </p>
@@ -319,46 +317,59 @@
             
               <div class="markdown-body">
                 
-                <h1 id="海外VPS使用Trojan协议搭建代理"><a href="#海外VPS使用Trojan协议搭建代理" class="headerlink" title="海外VPS使用Trojan协议搭建代理"></a>海外VPS使用Trojan协议搭建代理</h1><h2 id="使用自动脚本"><a href="#使用自动脚本" class="headerlink" title="使用自动脚本"></a>使用自动脚本</h2><p>安装前需要将任意域名解析到此VPS，如<code>proxy.sakiison.icu</code>，可以使用二级域名三级域名。</p>
-<p>在root用户权限下运行下列脚本：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#安装/更新</span><br><span class="hljs-built_in">source</span> &lt;(curl -sL https://git.io/trojan-install)<br><br><span class="hljs-comment">#卸载</span><br><span class="hljs-built_in">source</span> &lt;(curl -sL https://git.io/trojan-install) --remove<br></code></pre></td></tr></table></figure>
+                <h1 id="使用YOURLS-Docker版，搭建短链接服务"><a href="#使用YOURLS-Docker版，搭建短链接服务" class="headerlink" title="使用YOURLS Docker版，搭建短链接服务"></a>使用YOURLS Docker版，搭建短链接服务</h1><h2 id="最终目录结构"><a href="#最终目录结构" class="headerlink" title="最终目录结构"></a>最终目录结构</h2><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121518422.png" srcset="/img/loading.gif" lazyload alt="image-20240712151858363" style="zoom:80%;" />
 
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102051643.png" srcset="/img/loading.gif" lazyload alt="installing"></p>
-<p>使用<code>trojan</code>协议需要申请证书，个人常用的是第一种和第四种，新手建议使用第一种，有效期3个月可自动续签；第四种下文讲解。</p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102051287.png" srcset="/img/loading.gif" lazyload alt="encrypt"></p>
-<p>安装数据库，建议用第一个就好。</p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102053695.png" srcset="/img/loading.gif" lazyload alt="database"></p>
-<p>等他跑一会就装好了，之后命令行会出现管理面板。</p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102057007.png" srcset="/img/loading.gif" lazyload alt="1"></p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102058828.png" srcset="/img/loading.gif" lazyload alt="2"></p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102058973.png" srcset="/img/loading.gif" lazyload alt="3"></p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102058142.png" srcset="/img/loading.gif" lazyload alt="5"></p>
-<p>可以通过浏览器访问<code>https://域名</code>进入管理面板进行多用户管理。</p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102101095.png" srcset="/img/loading.gif" lazyload alt="panel"></p>
-<p>装完了，简单高效！~</p>
-<h2 id="证书有关问题"><a href="#证书有关问题" class="headerlink" title="证书有关问题"></a>证书有关问题</h2><h3 id="第一种-Let-s-Encrypt："><a href="#第一种-Let-s-Encrypt：" class="headerlink" title="第一种,Let&#39;s Encrypt："></a>第一种,<code>Let&#39;s Encrypt</code>：</h3><p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102105991.png" srcset="/img/loading.gif" lazyload alt="let&#39;s encrypt"></p>
-<p>选择<code>1</code>，填入域名，会自动运行证书申请脚本。</p>
-<h3 id="第四种，自定义证书"><a href="#第四种，自定义证书" class="headerlink" title="第四种，自定义证书"></a>第四种，自定义证书</h3><blockquote>
-<p>此方案针对已经在域名注册商处申请证书的用户，导入证书使用。</p>
+<p>以上是本项目完成时<code>/root/yourls</code>目录的结构，由于本项目部分组件的教程文档过于简陋，所以很容易放错位置，请务必注意目录的结构。</p>
+<h2 id="基础环境安装"><a href="#基础环境安装" class="headerlink" title="基础环境安装"></a>基础环境安装</h2><p>首先，创建工作目录，比如<code>/root/yourls</code>，在其中新建<code>docker-compose.yml</code>，加入以下内容：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.1&#x27;</span><br><br><span class="hljs-attr">services:</span><br><br>  <span class="hljs-attr">yourls:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">yourls</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-number">34324</span><span class="hljs-string">:80</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">YOURLS_DB_NAME:</span> <span class="hljs-string">yourls</span><br>      <span class="hljs-attr">YOURLS_DB_USER:</span> <span class="hljs-string">yourls</span><br>      <span class="hljs-attr">YOURLS_DB_PASS:</span> <span class="hljs-string">yourls</span><br>      <span class="hljs-attr">YOURLS_SITE:</span> <span class="hljs-string">https://url.xxxx.xxx</span><br>      <span class="hljs-attr">YOURLS_USER:</span> <span class="hljs-string">admin</span><br>      <span class="hljs-attr">YOURLS_PASS:</span> <span class="hljs-string">admin</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./yourls_data/:/var/www/html</span><br><br>  <span class="hljs-attr">mysql:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">mysql</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">MYSQL_ROOT_PASSWORD:</span> <span class="hljs-string">example</span><br>      <span class="hljs-attr">MYSQL_DATABASE:</span> <span class="hljs-string">yourls</span><br>      <span class="hljs-attr">MYSQL_USER:</span> <span class="hljs-string">yourls</span><br>      <span class="hljs-attr">MYSQL_PASSWORD:</span> <span class="hljs-string">yourls</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./mysql/db/:/var/lib/mysql</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./mysql/conf/:/etc/mysql/conf.d</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>“34324”端口为外部暴露端口，根据需要修改</li>
+<li>YOURLS_DB_NAME -&gt; MYSQL_DATABASE，YOURLS_DB_USER -&gt; MYSQL_USER，YOURLS_DB_PASS -&gt; MYSQL_PASSWORD，三组变量一一对应，根据自己需要填写</li>
+<li>YOURLS_SITE为网站地址，填写自己即将使用的域名</li>
+<li>YOURLS_USER&#x2F;PASS是管理员登录账号密码，根据需要填写</li>
+<li>为便于修改内部文件，我们使用挂载卷的形式，<code>yourls.volumes</code>挂载在本地的<code>/root/yourls/yourls_data</code>，<code>mysql.volumes</code>挂载在本地的<code>/root/yourls/mysql</code>中的两个文件夹</li>
+</ul>
 </blockquote>
-<p>部分域名注册商会提供免费证书额度，按照指示申请即可，以腾讯云为例。</p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102207858.png" srcset="/img/loading.gif" lazyload alt="Tencent cloud"></p>
-<p>大部分网站用个免费的就够了。</p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102208455.png" srcset="/img/loading.gif" lazyload alt="cert"></p>
-<p>根据提示设置就好，验证方式我一般用文件验证，用宝塔面板传个文件很容易，DNS有时候就很慢，很久不生效。自己选个适合的就行。</p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102212187.png" srcset="/img/loading.gif" lazyload alt="验证"></p>
-<p>申请成功之后会有邮件短信提示，现在就可以下载证书了。</p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102213245.png" srcset="/img/loading.gif" lazyload alt="download"></p>
-<p>下载格式随便选，注意要有<code>crt</code>和<code>key</code>文件。</p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102217418.png" srcset="/img/loading.gif" lazyload alt="cert format"></p>
-<p>下载解压之后，上传。</p>
-<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202311102157043.png" srcset="/img/loading.gif" lazyload alt="auth"></p>
-<p>将证书的<code>cert</code>和<code>key</code>上传至任意路径，粘贴路径于输入框即可。</p>
-<hr>
-<p><strong>Enjoy！</strong></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>[VPS 初体验（三）在 VPS 上快速搭建 trojan 服务](<a target="_blank" rel="noopener" href="https://kiku.vip/2021/10/16/%E5%9C%A8">https://kiku.vip/2021/10/16/在</a> VPS 快速搭建 trojan 服务&#x2F;)
-<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/Jrohy/trojan">Jrohy&#x2F;trojan: trojan多用户管理部署程序, 支持web页面管理</a>
-<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+<p>运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose up -d<br></code></pre></td></tr></table></figure>
+
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>若要使用域名访问，请设置反向代理，具体方式可以查看之前文章，不再赘述。</p>
+<p>完成反向代理配置之后，打开<code>url.xxxx.xxx/admin</code>点击<code>install</code>进行安装，输入<code>YOURLS_USER/PASS</code>中设置的管理员账号密码，现在你就可以看到一个简陋的后台页面了。</p>
+<p><strong>但是请注意，默认的<code>yourls</code>是只有后台管理员界面的，当你尝试访问<code>url.xxxx.xxx</code>只能得到大大的<code>Forbidden</code></strong></p>
+<p>如果你没有更多需求，那么通过这个<code>url.xxxx.xxx/admin</code>页面的管理员后台也是勉强可以使用的，但是这并不是我们印象中的所谓“短链接”平台，所以我们要安装前台页面，顺便给管理员后台美化一下。</p>
+<h2 id="Sleeky美化包的安装"><a href="#Sleeky美化包的安装" class="headerlink" title="Sleeky美化包的安装"></a>Sleeky美化包的安装</h2><p>访问下方仓库下载主题包并查看简单教程</p>
+<div class="note note-primary">
+            <p><a target="_blank" rel="noopener" href="https://github.com/Flynntes/Sleeky">Flynntes&#x2F;Sleeky: 🎨 A sleek and simple frontend &amp; backend theme for YOURLS</a></p>
+          </div>
+
+<h3 id="backend"><a href="#backend" class="headerlink" title="backend"></a>backend</h3><p>下载之后解压，将其中的<code>sleeky-backend</code>移动至<code>yourls/yourls_data/user/plugins</code>，刷新后在管理员后台<code>manage plugins</code>选项中激活<code>sleeky backend</code>插件（点击<code>action</code>列的<code>activate</code>），顺道提一句，自带的<code>random shorturls</code>插件也建议启用，否则后缀只是按照数字排序，没内味😉</p>
+<blockquote>
+<p>插件启用后记得刷新，否则浏览器缓存会导致看不到生效后的效果</p>
+</blockquote>
+<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121538705.png" srcset="/img/loading.gif" lazyload alt="240712153704" style="zoom:80%;" />
+
+<h3 id="frontend"><a href="#frontend" class="headerlink" title="frontend"></a>frontend</h3><p>打开下载的主题包中的<code>sleeky-frontend</code>文件夹，将其中的<code>frontend</code>文件夹和<code>index.php</code>文件复制到<code>/root/yourls/yourls_data</code>目录中，<strong>注意看文章开头给出的目录结构</strong>，这一步开发者文档中的说明有些模糊，容易造成误解。</p>
+<p>重启程序</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose restart<br></code></pre></td></tr></table></figure>
+
+<p>打开<code>url.xxxx.xxx</code>就可以查看前台页面</p>
+<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121547596.png" srcset="/img/loading.gif" lazyload alt="image-20240712154707361" style="zoom: 33%;" />
+
+<h3 id="其他美化和插件"><a href="#其他美化和插件" class="headerlink" title="其他美化和插件"></a>其他美化和插件</h3><p>可以进入以下仓库查看更多皮肤与插件</p>
+<div class="note note-success">
+            <p><a target="_blank" rel="noopener" href="https://github.com/YOURLS/awesome">YOURLS&#x2F;awesome: 🎉 A curated list of awesome things related to YOURLS</a></p>
+          </div>
+
+<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="页面显示不正常-1"><a href="#页面显示不正常-1" class="headerlink" title="页面显示不正常[1]"></a>页面显示不正常<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Frontend page isn't displayed correctly · Issue #130 · Flynntes/Sleeky](https://github.com/Flynntes/Sleeky/issues/130#issuecomment-1824605122)">[1]</span></a></sup></h3><p>在上述方法安装前台页面之后，可能会出现显示页面显示不正常的情况，对<code>/root/yourls/yourls_data/frontend/header.php</code>进行修改，删除下图第15行中的<code>&lt;?php echo $YOURLS_SITE ?&gt;</code> 后重启程序即可。</p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121548066.png" srcset="/img/loading.gif" lazyload alt="240711202807"></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/Flynntes/Sleeky/issues/130#issuecomment-1824605122">Frontend page isn’t displayed correctly · Issue #130 · Flynntes&#x2F;Sleeky</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/YOURLS/awesome">YOURLS&#x2F;awesome: 🎉 A curated list of awesome things related to YOURLS</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/YOURLS/YOURLS">YOURLS&#x2F;YOURLS: 🔗 The de facto standard self hosted URL shortener in PHP</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.laoda.de/archives/docker-compose-install-yourls">【好玩儿的Docker项目】10分钟搭建一个自己的短链接服务</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://hub.docker.com/_/yourls?tab=description">yourls - Official Image | Docker Hub</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
             
@@ -376,15 +387,8 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Major/" class="category-chain-item">Major</a>
+  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
   
-  
-    <span>></span>
-    
-  <a href="/categories/Major/Proxies/" class="category-chain-item">Proxies</a>
-  
-  
-
   
 
       </span>
@@ -398,11 +402,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/VPS/">#VPS</a>
-      
-        <a href="/tags/Proxy/">#Proxy</a>
-      
-        <a href="/tags/Trojan/">#Trojan</a>
+        <a href="/tags/Docker/">#Docker</a>
       
     </div>
   
@@ -414,8 +414,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>海外VPS使用Trojan协议搭建代理</div>
-      <div>https://www.0co.dev/Trojan-Proxy/</div>
+      <div>使用YOURLS Docker版，搭建短链接服务</div>
+      <div>https://www.0co.dev/yourls-docker/</div>
     </div>
     <div class="license-meta">
       
@@ -427,7 +427,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年10月23日</div>
+          <div>2024年7月12日</div>
         </div>
       
       
@@ -459,18 +459,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/SubConvertor/" title="海外VPS搭建SubConvertor订阅转换工具">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">海外VPS搭建SubConvertor订阅转换工具</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/privatebin-by-docker/" title="通过privatebin和docker搭建在线剪贴板">
-                        <span class="hidden-mobile">通过privatebin和docker搭建在线剪贴板</span>
+                      <a href="/media-unlock-bot/" title="搭建自有流媒体解锁检测机器人">
+                        <span class="hidden-mobile">搭建自有流媒体解锁检测机器人</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
