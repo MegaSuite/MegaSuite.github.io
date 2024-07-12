@@ -15,7 +15,7 @@ excerpt: 使用YOURLS Docker版，搭建短链接服务
 
 ## 最终目录结构
 
-<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121518422.png" alt="image-20240712151858363" style="zoom:80%;" />
+![dir](https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121518422.png)
 
 以上是本项目完成时`/root/yourls`目录的结构，由于本项目部分组件的教程文档过于简陋，所以很容易放错位置，请务必注意目录的结构。
 
@@ -126,7 +126,7 @@ docker compose restart
 
 在上述方法安装前台页面之后，可能会出现显示页面显示不正常的情况，对`/root/yourls/yourls_data/frontend/header.php`进行修改，删除下图第15行中的`<?php echo $YOURLS_SITE ?>` 后重启程序即可。
 
-![240711202807](https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121548066.png)
+<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121548066.png" alt="240711202807" style="zoom:80%;" />
 
 ## References
 
