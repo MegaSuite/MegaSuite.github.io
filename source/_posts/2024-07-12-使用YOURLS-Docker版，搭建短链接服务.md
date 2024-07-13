@@ -82,9 +82,11 @@ docker compose up -d
 
 访问下方仓库下载主题包并查看简单教程
 
+> 原作者长期未维护，下方仓库中的代码是本文作者根据各issue中提到的解决方法优化之后的版本，使用此代码不会出现**FAQ**中的问题
+
 {% note primary %}
 
-[Flynntes/Sleeky: 🎨 A sleek and simple frontend & backend theme for YOURLS](https://github.com/Flynntes/Sleeky)
+[MegaSuite/Sleeky-Docker: Based on Flynntes/Sleeky, optimised for docker deployment.](https://github.com/MegaSuite/Sleeky-Docker)
 
 {% endnote %}
 
@@ -128,10 +130,18 @@ docker compose restart
 
 <img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121548066.png" alt="240711202807" style="zoom:80%;" />
 
+### 更换主题后，管理员无法登录
+
+对`/root/yourls/yourls_data/user/plugins/sleeky-backend/plugin.php`进行修改，`if (yourls_is_valid_user() != 1) {`修改为`if( defined( 'YOURLS_USER' ) ) {`，如下图所示：
+
+<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407131157093.png" alt="240713113450" style="zoom:80%;" />
+
 ## References
 
 [^1]:[Frontend page isn't displayed correctly · Issue #130 · Flynntes/Sleeky](https://github.com/Flynntes/Sleeky/issues/130#issuecomment-1824605122)
-[^2]:[YOURLS/awesome: 🎉 A curated list of awesome things related to YOURLS](https://github.com/YOURLS/awesome)
-[^3]:[YOURLS/YOURLS: 🔗 The de facto standard self hosted URL shortener in PHP](https://github.com/YOURLS/YOURLS)
-[^4]:[【好玩儿的Docker项目】10分钟搭建一个自己的短链接服务](https://blog.laoda.de/archives/docker-compose-install-yourls)
-[^5]:[yourls - Official Image | Docker Hub](https://hub.docker.com/_/yourls?tab=description)
+
+[^2]:[Broke Login · Issue #127 · Flynntes/Sleeky (github.com)](https://github.com/Flynntes/Sleeky/issues/127)
+[^3]:[YOURLS/awesome: 🎉 A curated list of awesome things related to YOURLS](https://github.com/YOURLS/awesome)
+[^4]:[YOURLS/YOURLS: 🔗 The de facto standard self hosted URL shortener in PHP](https://github.com/YOURLS/YOURLS)
+[^5]:[【好玩儿的Docker项目】10分钟搭建一个自己的短链接服务](https://blog.laoda.de/archives/docker-compose-install-yourls)
+[^6]:[yourls - Official Image | Docker Hub](https://hub.docker.com/_/yourls?tab=description)
