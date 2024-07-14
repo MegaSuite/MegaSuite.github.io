@@ -23,26 +23,27 @@
   <meta name="author" content="Konrad Gerrens">
   <meta name="keywords" content="">
   
-    <meta name="description" content="使用YOURLS Docker版，搭建短链接服务">
+    <meta name="description" content="使用acme.sh自动服务和Cloudflare dns验证完成Google泛域名证书的申请">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用YOURLS Docker版，搭建短链接服务">
-<meta property="og:url" content="https://www.0co.dev/yourls-docker/">
+<meta property="og:title" content="Acme + Cloudflare, 申请Google免费泛域名证书">
+<meta property="og:url" content="https://www.0co.dev/google-free-cert/">
 <meta property="og:site_name" content="Ethereal State">
-<meta property="og:description" content="使用YOURLS Docker版，搭建短链接服务">
+<meta property="og:description" content="使用acme.sh自动服务和Cloudflare dns验证完成Google泛域名证书的申请">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121459709.png">
-<meta property="article:published_time" content="2024-07-12T06:57:06.000Z">
-<meta property="article:modified_time" content="2024-07-13T04:00:24.524Z">
+<meta property="og:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141531852.png">
+<meta property="article:published_time" content="2024-07-14T07:24:48.000Z">
+<meta property="article:modified_time" content="2024-07-14T08:23:25.029Z">
 <meta property="article:author" content="Konrad Gerrens">
-<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="VPS">
+<meta property="article:tag" content="Website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121459709.png">
+<meta name="twitter:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141531852.png">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>使用YOURLS Docker版，搭建短链接服务 - Ethereal State</title>
+  <title>Acme + Cloudflare, 申请Google免费泛域名证书 - Ethereal State</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -224,7 +225,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="使用YOURLS Docker版，搭建短链接服务"></span>
+            <span id="subtitle" data-typed-text="Acme + Cloudflare, 申请Google免费泛域名证书"></span>
           
         </div>
 
@@ -235,8 +236,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-07-12 14:57" pubdate>
-          2024年7月12日 下午
+        <time datetime="2024-07-14 15:24" pubdate>
+          2024年7月14日 下午
         </time>
       </span>
     
@@ -247,7 +248,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          1.8k 字
         
       </span>
     
@@ -258,7 +259,7 @@
         
         
         
-          22 分钟
+          15 分钟
         
       </span>
     
@@ -304,12 +305,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">使用YOURLS Docker版，搭建短链接服务</h1>
+            <h1 style="display: none">Acme + Cloudflare, 申请Google免费泛域名证书</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年7月13日 中午
+                    本文最后更新于：2024年7月14日 下午
                   
                 
               </p>
@@ -317,66 +318,60 @@
             
               <div class="markdown-body">
                 
-                <h1 id="使用YOURLS-Docker版，搭建短链接服务"><a href="#使用YOURLS-Docker版，搭建短链接服务" class="headerlink" title="使用YOURLS Docker版，搭建短链接服务"></a>使用YOURLS Docker版，搭建短链接服务</h1><h2 id="最终目录结构"><a href="#最终目录结构" class="headerlink" title="最终目录结构"></a>最终目录结构</h2><p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121518422.png" srcset="/img/loading.gif" lazyload alt="dir"></p>
-<p>以上是本项目完成时<code>/root/yourls</code>目录的结构，由于本项目部分组件的教程文档过于简陋，所以很容易放错位置，请务必注意目录的结构。</p>
-<h2 id="基础环境安装"><a href="#基础环境安装" class="headerlink" title="基础环境安装"></a>基础环境安装</h2><p>首先，创建工作目录，比如<code>/root/yourls</code>，在其中新建<code>docker-compose.yml</code>，加入以下内容：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.1&#x27;</span><br><br><span class="hljs-attr">services:</span><br><br>  <span class="hljs-attr">yourls:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">yourls</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-number">34324</span><span class="hljs-string">:80</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">YOURLS_DB_NAME:</span> <span class="hljs-string">yourls</span><br>      <span class="hljs-attr">YOURLS_DB_USER:</span> <span class="hljs-string">yourls</span><br>      <span class="hljs-attr">YOURLS_DB_PASS:</span> <span class="hljs-string">yourls</span><br>      <span class="hljs-attr">YOURLS_SITE:</span> <span class="hljs-string">https://url.xxxx.xxx</span><br>      <span class="hljs-attr">YOURLS_USER:</span> <span class="hljs-string">admin</span><br>      <span class="hljs-attr">YOURLS_PASS:</span> <span class="hljs-string">admin</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./yourls_data/:/var/www/html</span><br><br>  <span class="hljs-attr">mysql:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">mysql</span><br>    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-attr">MYSQL_ROOT_PASSWORD:</span> <span class="hljs-string">example</span><br>      <span class="hljs-attr">MYSQL_DATABASE:</span> <span class="hljs-string">yourls</span><br>      <span class="hljs-attr">MYSQL_USER:</span> <span class="hljs-string">yourls</span><br>      <span class="hljs-attr">MYSQL_PASSWORD:</span> <span class="hljs-string">yourls</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./mysql/db/:/var/lib/mysql</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">./mysql/conf/:/etc/mysql/conf.d</span><br></code></pre></td></tr></table></figure>
+                <h1 id="Acme-Cloudflare-申请Google免费泛域名证书"><a href="#Acme-Cloudflare-申请Google免费泛域名证书" class="headerlink" title="Acme + Cloudflare, 申请Google免费泛域名证书"></a>Acme + Cloudflare, 申请Google免费泛域名证书</h1><h2 id="获取Google验证信息"><a href="#获取Google验证信息" class="headerlink" title="获取Google验证信息"></a>获取Google验证信息</h2><p>进入链接，点击左上角项目名称，获得<code>project id</code></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>console.cloud.google.com<span class="hljs-regexp">/apis/</span>dashboard<br></code></pre></td></tr></table></figure>
 
+<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141534696.png" srcset="/img/loading.gif" lazyload alt="image-20240714153430529" style="zoom: 67%;" />
+
+<p>将得到的<code>project id</code>填入下方链接并访问，启用<code>Public Certificate Authority API</code>服务</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>console.cloud.google.com<span class="hljs-regexp">/apis/</span>library/publicca.googleapis.com?project=&lt;Project ID&gt;<br></code></pre></td></tr></table></figure>
+
+<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141538598.png" srcset="/img/loading.gif" lazyload alt="image-20240714153819514" style="zoom:80%;" />
+
+<p>点击下图图标，进入<code>Cloud Shell</code></p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141540879.png" srcset="/img/loading.gif" lazyload alt="shell"></p>
+<p>在终端中输入以下代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">gcloud config <span class="hljs-built_in">set</span> project &lt;Project ID&gt; <span class="hljs-comment"># 注意替换project id</span><br>gcloud beta publicca external-account-keys create<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141545043.png" srcset="/img/loading.gif" lazyload alt="key"></p>
+<p>获取生成的<code>b64MacKey</code>和<code>keyId</code></p>
+<h2 id="配置acme"><a href="#配置acme" class="headerlink" title="配置acme"></a>配置acme</h2><p>使用下方命令安装acme，<strong>注意替换email</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl https://get.acme.sh | sh -s email=&lt;EMAIL&gt; <br><span class="hljs-built_in">source</span> ~/.bashrc<br></code></pre></td></tr></table></figure>
+
+<p>设置默认注册服务器为Google</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">acme.sh --set-default-ca --server google<br></code></pre></td></tr></table></figure>
+
+<p>添加账户，替换为申请到的key和id，若显示失效需要重新申请</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">acme.sh --register-account  --server google \<br>        --eab-kid &lt;keyId&gt;  \<br>        --eab-hmac-key &lt;b64MacKey&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="配置dns验证"><a href="#配置dns验证" class="headerlink" title="配置dns验证"></a>配置dns验证</h2><p>打开下方网址</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>dash.cloudflare.com<span class="hljs-regexp">/profile/</span>api-tokens<br></code></pre></td></tr></table></figure>
+
+<p>API Tokens -&gt; Create Token -&gt; Edit Zone DNS(点击 use template)</p>
 <blockquote>
-<ul>
-<li>“34324”端口为外部暴露端口，根据需要修改</li>
-<li>YOURLS_DB_NAME -&gt; MYSQL_DATABASE，YOURLS_DB_USER -&gt; MYSQL_USER，YOURLS_DB_PASS -&gt; MYSQL_PASSWORD，三组变量一一对应，根据自己需要填写</li>
-<li>YOURLS_SITE为网站地址，填写自己即将使用的域名</li>
-<li>YOURLS_USER&#x2F;PASS是管理员登录账号密码，根据需要填写</li>
-<li>为便于修改内部文件，我们使用挂载卷的形式，<code>yourls.volumes</code>挂载在本地的<code>/root/yourls/yourls_data</code>，<code>mysql.volumes</code>挂载在本地的<code>/root/yourls/mysql</code>中的两个文件夹</li>
-</ul>
+<p>在此页面也可获取Global Token，更省事，但不安全，不建议</p>
 </blockquote>
-<p>运行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose up -d<br></code></pre></td></tr></table></figure>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141556594.png" srcset="/img/loading.gif" lazyload alt="token"></p>
+<p>如果需要为多个域名申请证书，可以点击<code>Zone Resources</code>下的<code>Add more</code>，添加更多域名。</p>
+<p>完成后点击<code>Continue to summary</code></p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141558885.png" srcset="/img/loading.gif" lazyload alt="zone dns"></p>
+<p>获取<code>API token</code>，此项称为<code>CF_Token</code></p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141600664.png" srcset="/img/loading.gif" lazyload alt="API token"></p>
+<p>进入需要申请证书的域名的管理页面，下滑，右下角获取<code>CF_Zone_ID</code>和<code>CF_Account_ID</code></p>
+<p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141603723.png" srcset="/img/loading.gif" lazyload alt="zone and account"></p>
+<p>进入终端，设置环境变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 如果获取单域token,使用此形式</span><br><span class="hljs-built_in">export</span> CF_Token=<span class="hljs-string">&quot;xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="hljs-built_in">export</span> CF_Account_ID=<span class="hljs-string">&quot;xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="hljs-built_in">export</span> CF_Zone_ID=<span class="hljs-string">&quot;xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><br><span class="hljs-comment"># 如果获取的是全局token，使用此形式</span><br><span class="hljs-built_in">export</span> CF_Key=<span class="hljs-string">&#x27;xxxxxxxxxxxxxxxxxxxxxxxx&#x27;</span><br><span class="hljs-built_in">export</span> CF_Email=<span class="hljs-string">&quot;你的cloudflare邮箱&quot;</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>若要使用域名访问，请设置反向代理，具体方式可以查看之前文章，不再赘述。</p>
-<p>完成反向代理配置之后，打开<code>url.xxxx.xxx/admin</code>点击<code>install</code>进行安装，输入<code>YOURLS_USER/PASS</code>中设置的管理员账号密码，现在你就可以看到一个简陋的后台页面了。</p>
-<p><strong>但是请注意，默认的<code>yourls</code>是只有后台管理员界面的，当你尝试访问<code>url.xxxx.xxx</code>只能得到大大的<code>Forbidden</code></strong></p>
-<p>如果你没有更多需求，那么通过这个<code>url.xxxx.xxx/admin</code>页面的管理员后台也是勉强可以使用的，但是这并不是我们印象中的所谓“短链接”平台，所以我们要安装前台页面，顺便给管理员后台美化一下。</p>
-<h2 id="Sleeky美化包的安装"><a href="#Sleeky美化包的安装" class="headerlink" title="Sleeky美化包的安装"></a>Sleeky美化包的安装</h2><p>访问下方仓库下载主题包并查看简单教程</p>
-<blockquote>
-<p>原作者长期未维护，下方仓库中的代码是本文作者根据各issue中提到的解决方法优化之后的版本，使用此代码不会出现<strong>FAQ</strong>中的问题</p>
-</blockquote>
-<div class="note note-primary">
-            <p><a target="_blank" rel="noopener" href="https://github.com/MegaSuite/Sleeky-Docker">MegaSuite&#x2F;Sleeky-Docker: Based on Flynntes&#x2F;Sleeky, optimised for docker deployment.</a></p>
-          </div>
+<h2 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">acme.sh --issue --dns dns_cf -d example.com <span class="hljs-comment">#单域名</span><br>acme.sh --issue --dns dns_cf -d *.example.com <span class="hljs-comment">#泛域名</span><br>acme.sh --issue --dns dns_cf -d sub1.example.com -d sub2.example.com <span class="hljs-comment">#多域名</span><br>acme.sh --issue --dns dns_cf -d example.com --ecc <span class="hljs-comment">#ECC 证书（目前默认就是ecc证书）</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="backend"><a href="#backend" class="headerlink" title="backend"></a>backend</h3><p>下载之后解压，将其中的<code>sleeky-backend</code>移动至<code>yourls/yourls_data/user/plugins</code>，刷新后在管理员后台<code>manage plugins</code>选项中激活<code>sleeky backend</code>插件（点击<code>action</code>列的<code>activate</code>），顺道提一句，自带的<code>random shorturls</code>插件也建议启用，否则后缀只是按照数字排序，没内味😉</p>
-<blockquote>
-<p>插件启用后记得刷新，否则浏览器缓存会导致看不到生效后的效果</p>
-</blockquote>
-<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121538705.png" srcset="/img/loading.gif" lazyload alt="240712153704" style="zoom:80%;" />
-
-<h3 id="frontend"><a href="#frontend" class="headerlink" title="frontend"></a>frontend</h3><p>打开下载的主题包中的<code>sleeky-frontend</code>文件夹，将其中的<code>frontend</code>文件夹和<code>index.php</code>文件复制到<code>/root/yourls/yourls_data</code>目录中，<strong>注意看文章开头给出的目录结构</strong>，这一步开发者文档中的说明有些模糊，容易造成误解。</p>
-<p>重启程序</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker compose restart<br></code></pre></td></tr></table></figure>
-
-<p>打开<code>url.xxxx.xxx</code>就可以查看前台页面</p>
-<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121547596.png" srcset="/img/loading.gif" lazyload alt="image-20240712154707361" style="zoom: 33%;" />
-
-<h3 id="其他美化和插件"><a href="#其他美化和插件" class="headerlink" title="其他美化和插件"></a>其他美化和插件</h3><p>可以进入以下仓库查看更多皮肤与插件</p>
-<div class="note note-success">
-            <p><a target="_blank" rel="noopener" href="https://github.com/YOURLS/awesome">YOURLS&#x2F;awesome: 🎉 A curated list of awesome things related to YOURLS</a></p>
-          </div>
-
-<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><h3 id="页面显示不正常-1"><a href="#页面显示不正常-1" class="headerlink" title="页面显示不正常[1]"></a>页面显示不正常<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="[Frontend page isn't displayed correctly · Issue #130 · Flynntes/Sleeky](https://github.com/Flynntes/Sleeky/issues/130#issuecomment-1824605122)">[1]</span></a></sup></h3><p>在上述方法安装前台页面之后，可能会出现显示页面显示不正常的情况，对<code>/root/yourls/yourls_data/frontend/header.php</code>进行修改，删除下图第15行中的<code>&lt;?php echo $YOURLS_SITE ?&gt;</code> 后重启程序即可。</p>
-<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407121548066.png" srcset="/img/loading.gif" lazyload alt="240711202807" style="zoom:80%;" />
-
-<h3 id="更换主题后，管理员无法登录"><a href="#更换主题后，管理员无法登录" class="headerlink" title="更换主题后，管理员无法登录"></a>更换主题后，管理员无法登录</h3><p>对<code>/root/yourls/yourls_data/user/plugins/sleeky-backend/plugin.php</code>进行修改，<code>if (yourls_is_valid_user() != 1) &#123;</code>修改为<code>if( defined( &#39;YOURLS_USER&#39; ) ) &#123;</code>，如下图所示：</p>
-<img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407131157093.png" srcset="/img/loading.gif" lazyload alt="240713113450" style="zoom:80%;" />
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/Flynntes/Sleeky/issues/130#issuecomment-1824605122">Frontend page isn’t displayed correctly · Issue #130 · Flynntes&#x2F;Sleeky</a>
-<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/Flynntes/Sleeky/issues/127">Broke Login · Issue #127 · Flynntes&#x2F;Sleeky (github.com)</a>
-<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/YOURLS/awesome">YOURLS&#x2F;awesome: 🎉 A curated list of awesome things related to YOURLS</a>
-<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/YOURLS/YOURLS">YOURLS&#x2F;YOURLS: 🔗 The de facto standard self hosted URL shortener in PHP</a>
-<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.laoda.de/archives/docker-compose-install-yourls">【好玩儿的Docker项目】10分钟搭建一个自己的短链接服务</a>
-<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:6" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://hub.docker.com/_/yourls?tab=description">yourls - Official Image | Docker Hub</a>
-<a href="#fnref:6" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+<p>看到回显<code>Cert success</code>即为申请成功，可以在<code>~/.acme.sh/_.example.com/</code>下获取证书</p>
+<p>证书有效期三个月，acme会自动检测并续期</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh/wiki">acmesh-official&#x2F;acme.sh Wik</a>
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:2" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://cloud.google.com/blog/products/identity-security/automate-public-certificate-lifecycle-management-via--acme-client-api">Automate Public Certificate Lifecycle Management via ACME Client API</a>
+<a href="#fnref:2" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:3" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://www.cestlavie.moe/posts/acme-gts-ssl/#fnref:1">使用 ACME.SH 申请 Google CA SSL 证书</a>
+<a href="#fnref:3" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:4" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://blog.iyume.top/other/155.html">使用 ACME 申请 Google CA SSL 证书</a>
+<a href="#fnref:4" rev="footnote" class="footnote-backref"> ↩</a></span></span></li><li><span id="fn:5" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://u.sb/acme-sh-ssl/">使用 acme.sh 配置自动续签 SSL 证书</a>
+<a href="#fnref:5" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
                 
               </div>
             
@@ -394,8 +389,15 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Docker/" class="category-chain-item">Docker</a>
+  <a href="/categories/Major/" class="category-chain-item">Major</a>
   
+  
+    <span>></span>
+    
+  <a href="/categories/Major/Website/" class="category-chain-item">Website</a>
+  
+  
+
   
 
       </span>
@@ -409,7 +411,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Docker/">#Docker</a>
+        <a href="/tags/VPS/">#VPS</a>
+      
+        <a href="/tags/Website/">#Website</a>
       
     </div>
   
@@ -421,8 +425,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>使用YOURLS Docker版，搭建短链接服务</div>
-      <div>https://www.0co.dev/yourls-docker/</div>
+      <div>Acme + Cloudflare, 申请Google免费泛域名证书</div>
+      <div>https://www.0co.dev/google-free-cert/</div>
     </div>
     <div class="license-meta">
       
@@ -434,7 +438,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年7月12日</div>
+          <div>2024年7月14日</div>
         </div>
       
       
@@ -466,18 +470,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/google-free-cert/" title="Acme + Cloudflare, 申请Google免费泛域名证书">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Acme + Cloudflare, 申请Google免费泛域名证书</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/media-unlock-bot/" title="搭建自有流媒体解锁检测机器人">
-                        <span class="hidden-mobile">搭建自有流媒体解锁检测机器人</span>
+                      <a href="/yourls-docker/" title="使用YOURLS Docker版，搭建短链接服务">
+                        <span class="hidden-mobile">使用YOURLS Docker版，搭建短链接服务</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
