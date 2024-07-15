@@ -125,6 +125,28 @@ acme.sh --issue --dns dns_cf -d example.com --ecc #ECC 证书（目前默认就�
 
 证书有效期三个月，acme会自动检测并续期
 
+## More
+
+上文中阐述的环境变量设置方法只在当前终端中有效，如果需要永久环境变量，请使用以下方法：
+
+```bash
+# 修改编辑权限
+chmod -v u+w /etc/bashrc
+
+vim /etc/bashrc
+
+# 将需要的环境变量添加在文件末尾
+export CF_Token = "xxxxx"
+...
+...
+...
+
+# 刷新终端
+source /etc/bashrc
+```
+
+永久有效，且对所有用户生效。
+
 ## Reference
 
 [^1]:[acmesh-official/acme.sh Wik](https://github.com/acmesh-official/acme.sh/wiki)
