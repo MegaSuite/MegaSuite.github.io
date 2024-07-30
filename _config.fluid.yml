@@ -426,17 +426,18 @@ footer:
   content: '
     Build by <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
     with <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid Theme</span></a>
-    <br/> © 2023 Konrad Gerrens
+    <br/> © 2023-2024 Konrad Gerrens
     <div style="font-size: 0.85rem">
     <span id="timeDate">载入天数...</span>
     <span id="times">载入时分秒...</span>
     <script src="/js/duration.js"></script>
     </div>
   '
-  content2: ' <div class="statistics">
- 	<a href="https://developer.hitokoto.cn/" id="hitokoto_text"><span style="color: #404c5b;"  id="hitokoto"></span></a>
-<script src="https://v1.hitokoto.cn/?encode=js&select=%23hitokoto" defer></script>
- </div>'
+  content2: '<div class="statistics">
+    <a href="https://notbyai.fyi/" target="_blank">
+        <img src="/img/Written-By-Human-Not-By-AI-Badge-white.png" style="width:auto; height:auto;" class="footer-image">
+    </a>
+</div>'
 
   # 展示网站的 PV、UV 统计数
   # Display website PV and UV statistics
