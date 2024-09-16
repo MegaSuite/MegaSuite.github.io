@@ -32,7 +32,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141531852.png">
 <meta property="article:published_time" content="2024-07-14T07:24:48.000Z">
-<meta property="article:modified_time" content="2024-07-15T05:00:25.252Z">
+<meta property="article:modified_time" content="2024-09-16T11:40:02.255Z">
 <meta property="article:author" content="Konrad Gerrens">
 <meta property="article:tag" content="VPS">
 <meta property="article:tag" content="Website">
@@ -310,7 +310,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2024年7月15日 下午
+                    本文最后更新于：2024年9月16日 晚上
                   
                 
               </p>
@@ -360,14 +360,14 @@
 <p>进入需要申请证书的域名的管理页面，下滑，右下角获取<code>CF_Zone_ID</code>和<code>CF_Account_ID</code></p>
 <p><img src="https://blog-pic-storage.oss-cn-shanghai.aliyuncs.com/img/202407141603723.png" srcset="/img/loading.gif" lazyload alt="zone and account"></p>
 <p>进入终端，设置环境变量</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 如果获取单域token,使用此形式</span><br><span class="hljs-built_in">export</span> CF_Token=<span class="hljs-string">&quot;xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="hljs-built_in">export</span> CF_Account_ID=<span class="hljs-string">&quot;xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="hljs-built_in">export</span> CF_Zone_ID=<span class="hljs-string">&quot;xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><br><span class="hljs-comment"># 如果获取的是全局token，使用此形式</span><br><span class="hljs-built_in">export</span> CF_Key=<span class="hljs-string">&#x27;xxxxxxxxxxxxxxxxxxxxxxxx&#x27;</span><br><span class="hljs-built_in">export</span> CF_Email=<span class="hljs-string">&quot;你的cloudflare邮箱&quot;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 如果获取单域token,使用此形式，CF_Zone_ID需要根据申请证书的域名所改变。</span><br><span class="hljs-built_in">export</span> CF_Token=<span class="hljs-string">&quot;xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="hljs-built_in">export</span> CF_Account_ID=<span class="hljs-string">&quot;xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><span class="hljs-built_in">export</span> CF_Zone_ID=<span class="hljs-string">&quot;xxxxxxxxxxxxxxxxxxxxxxxx&quot;</span><br><br><span class="hljs-comment"># 如果获取的是全局token，使用此形式</span><br><span class="hljs-built_in">export</span> CF_Key=<span class="hljs-string">&#x27;xxxxxxxxxxxxxxxxxxxxxxxx&#x27;</span><br><span class="hljs-built_in">export</span> CF_Email=<span class="hljs-string">&quot;你的cloudflare邮箱&quot;</span><br></code></pre></td></tr></table></figure>
 
 <h2 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">acme.sh --issue --dns dns_cf -d example.com <span class="hljs-comment">#单域名</span><br>acme.sh --issue --dns dns_cf -d *.example.com <span class="hljs-comment">#泛域名</span><br>acme.sh --issue --dns dns_cf -d sub1.example.com -d sub2.example.com <span class="hljs-comment">#多域名</span><br>acme.sh --issue --dns dns_cf -d example.com --ecc <span class="hljs-comment">#ECC 证书（目前默认就是ecc证书）</span><br></code></pre></td></tr></table></figure>
 
 <p>看到回显<code>Cert success</code>即为申请成功，可以在<code>~/.acme.sh/_.example.com/</code>下获取证书</p>
 <p>证书有效期三个月，acme会自动检测并续期</p>
 <h2 id="More"><a href="#More" class="headerlink" title="More"></a>More</h2><p>上文中阐述的环境变量设置方法只在当前终端中有效，如果需要永久环境变量，请使用以下方法：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 修改编辑权限</span><br><span class="hljs-built_in">chmod</span> -v u+w /etc/bashrc<br><br>vim /etc/bashrc<br><br><span class="hljs-comment"># 将需要的环境变量添加在文件末尾</span><br><span class="hljs-built_in">export</span> CF_Token = <span class="hljs-string">&quot;xxxxx&quot;</span><br>...<br>...<br>...<br><br><span class="hljs-comment"># 刷新终端</span><br><span class="hljs-built_in">source</span> /etc/bashrc<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 以下命令均基于Debian系统，其他系统请自行更改bash文件的位置</span><br><span class="hljs-comment"># 修改编辑权限</span><br><span class="hljs-built_in">chmod</span> -v u+w ~/.bashrc<br><br>vim ~/.bashrc<br><br><span class="hljs-comment"># 将需要的环境变量添加在文件末尾</span><br><span class="hljs-built_in">export</span> CF_Token = <span class="hljs-string">&quot;xxxxx&quot;</span><br>...<br>...<br>...<br><br><span class="hljs-comment"># 刷新终端</span><br><span class="hljs-built_in">source</span> ~/.bashrc<br></code></pre></td></tr></table></figure>
 
 <p>永久有效，且对所有用户生效。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><section class="footnotes"><div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span><a target="_blank" rel="noopener" href="https://github.com/acmesh-official/acme.sh/wiki">acmesh-official&#x2F;acme.sh Wik</a>
