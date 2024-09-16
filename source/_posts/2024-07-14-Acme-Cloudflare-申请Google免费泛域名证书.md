@@ -102,7 +102,7 @@ API Tokens -> Create Token -> Edit Zone DNS(点击 use template)
 进入终端，设置环境变量
 
 ```bash
-# 如果获取单域token,使用此形式
+# 如果获取单域token,使用此形式，CF_Zone_ID需要根据申请证书的域名所改变。
 export CF_Token="xxxxxxxxxxxxxxxxxxxxxxxx"
 export CF_Account_ID="xxxxxxxxxxxxxxxxxxxxxxxx"
 export CF_Zone_ID="xxxxxxxxxxxxxxxxxxxxxxxx"
@@ -130,10 +130,11 @@ acme.sh --issue --dns dns_cf -d example.com --ecc #ECC 证书（目前默认就�
 上文中阐述的环境变量设置方法只在当前终端中有效，如果需要永久环境变量，请使用以下方法：
 
 ```bash
+# 以下命令均基于Debian系统，其他系统请自行更改bash文件的位置
 # 修改编辑权限
-chmod -v u+w /etc/bashrc
+chmod -v u+w ~/.bashrc
 
-vim /etc/bashrc
+vim ~/.bashrc
 
 # 将需要的环境变量添加在文件末尾
 export CF_Token = "xxxxx"
@@ -142,7 +143,7 @@ export CF_Token = "xxxxx"
 ...
 
 # 刷新终端
-source /etc/bashrc
+source ~/.bashrc
 ```
 
 永久有效，且对所有用户生效。
