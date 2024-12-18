@@ -1,7 +1,7 @@
 ---
-title: 使用proxychain进行代理测试
+title: 使用proxychains4进行代理测试
 math: false
-permalink: proxychain/
+permalink: proxychains/
 date: 2024-12-18 15:19:35
 tags:
 - Proxy
