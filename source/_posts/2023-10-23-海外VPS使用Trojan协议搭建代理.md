@@ -4,7 +4,7 @@ date: 2023-10-23 14:09:29
 permalink: Trojan-Proxy/
 tags:
 - Trojan
-- VPS
+- Server
 - Proxy
 categories:
 - Major

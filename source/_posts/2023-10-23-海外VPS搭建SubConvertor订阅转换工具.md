@@ -3,7 +3,7 @@ title: 海外VPS搭建SubConvertor订阅转换工具
 date: 2023-10-23 14:10:40
 permalink: SubConvertor/
 tags:
-- VPS
+- Server
 - Proxy
 categories:
 - Major

@@ -4,7 +4,7 @@ math: false
 permalink: google-free-cert/
 date: 2024-07-14 15:24:48
 tags:
-- VPS
+- Server
 - Website
 categories:
 - Major
